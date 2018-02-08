@@ -87,6 +87,24 @@ for cSes = 1:numel(session)
         alldata.exp.all.Ntarget(expcount)           = sum(data.rotation == 180);                           % target trials
         alldata.exp.all.Nnontarget(expcount)        = sum(data.rotation == 0);                             % non-target trials
         
+        % cued/noncued hitrates
+        alldata.exp.all.NcuedHits(expcount)         = sum(strcmp(data.stimulus, data.prob_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.prob_cue, '') & data.rotation == 180 & data.key_resp_2_rt > 0);
+        alldata.exp.all.NnoncuedHits(expcount)      = sum(~strcmp(data.stimulus, data.prob_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.prob_cue, '') & data.rotation == 180 & data.key_resp_2_rt > 0);
+        % cued/noncued falsealarms
+        alldata.exp.all.NcuedFa(expcount)           = sum(strcmp(data.stimulus, data.prob_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.prob_cue, '') & data.rotation == 0 & data.key_resp_2_rt > 0);  
+        alldata.exp.all.NnoncuedFa(expcount)        = sum(~strcmp(data.stimulus, data.prob_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.prob_cue, '') & data.rotation == 0 & data.key_resp_2_rt > 0); 
+        
+        % average Cued hitrate
+        alldata.exp.all.cuedHr(expcount)            = alldata.exp.all.NcuedHits(expcount) / alldata.exp.all.hits(expcount);
+        % average nonCued hitrate
+        alldata.exp.all.noncuedHr(expcount)         = alldata.exp.all.NnoncuedHits(expcount) / alldata.exp.all.hits(expcount);
+                
+        % average Cued falsealarm rate
+        alldata.exp.all.cuedFar(expcount)            = alldata.exp.all.NcuedFa(expcount) / alldata.exp.all.fa(expcount);
+        % average nonCued falsealarm rate
+        alldata.exp.all.noncuedFar(expcount)         = alldata.exp.all.NnoncuedFa(expcount) / alldata.exp.all.fa(expcount);
+        
+        
         % average hitrate
         alldata.exp.all.hr(expcount)                = alldata.exp.all.hits(expcount) / alldata.exp.all.Ntarget(expcount);
         % average falsealarm rate
@@ -130,6 +148,29 @@ for cSes = 1:numel(session)
         alldata.rel.all.fa(relcount)                = sum(data.rotation ~= 0 & strcmp(data.task_relevance_target, 'None') & data.key_resp_2_rt > 0);
         alldata.rel.all.Ntarget(relcount)           = sum(strcmp(data.task_relevance_target, '1'));
         alldata.rel.all.Nnontarget(relcount)        = sum(data.rotation ~= 0 & strcmp(data.task_relevance_target,'None'));
+        
+        %%%%%%%%%% not same ammount of cued and noncued target trials
+        sum(strcmp(data.stimulus, data.prob_cue))
+        sum(~strcmp(data.stimulus, data.prob_cue))
+        %%%%%%%%%%
+        
+         % cued/noncued hitrates
+        alldata.rel.all.NcuedHits(expcount)         = sum( strcmp(data.stimulus, data.task_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.task_cue, '') & strcmp(data.task_relevance_target,'1') & data.key_resp_2_rt > 0);
+        alldata.rel.all.NnoncuedHits(expcount)      = sum(~strcmp(data.stimulus, data.task_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.task_cue, '') & strcmp(data.task_relevance_target,'1') & data.key_resp_2_rt > 0);
+        % cued/noncued falsealarms
+        alldata.rel.all.NcuedFa(expcount)           = sum( strcmp(data.stimulus, data.task_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.task_cue, '') & data.rotation ~= 0 & strcmp(data.task_relevance_target, 'None') & data.key_resp_2_rt > 0);  
+        alldata.rel.all.NnoncuedFa(expcount)        = sum(~strcmp(data.stimulus, data.task_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.task_cue, '') & data.rotation ~= 0 & strcmp(data.task_relevance_target, 'None') & data.key_resp_2_rt > 0); 
+                        
+        % average Cued hitrate
+        alldata.rel.all.cuedHr(expcount)            = alldata.rel.all.NcuedHits(expcount) / alldata.rel.all.hits(expcount);
+        % average nonCued hitrate
+        alldata.rel.all.noncuedHr(expcount)         = alldata.rel.all.NnoncuedHits(expcount) / alldata.rel.all.hits(expcount);
+                
+        % average Cued falsealarm rate
+        alldata.rel.all.cuedFar(expcount)            = alldata.rel.all.NcuedFa(expcount) / alldata.rel.all.fa(expcount);
+        % average nonCued falsealarm rate
+        alldata.rel.all.noncuedFar(expcount)         = alldata.rel.all.NnoncuedFa(expcount) / alldata.rel.all.fa(expcount);
+        
         
         % average hr
         alldata.rel.all.hr(relcount)                = alldata.rel.all.hits(relcount) / alldata.rel.all.Ntarget(relcount);
@@ -395,6 +436,29 @@ suptitle('average HR and FAR by session:');
 
 saveas(gcf, [master_working_folder 'Predictive_EEG/BEHAVIOR/hr_far_04_aver_sess.png'])
 close(gcf)
+
+%% average HRs and FARs in prediction task by cued/not-cued trial
+
+colormap(summer(2))
+
+% cued target trials == noncued target trials????*******************
+
+
+
+avrg_hr_far_cues = [mean(alldata.exp.all.cuedHr) ...
+                    mean(alldata.exp.all.noncuedHr) ...
+                    mean(alldata.exp.all.cuedFar) ...
+                    mean(alldata.exp.all.noncuedFar)]'*100;
+
+bar(avrg_hr_far_cues)
+xlab_nms = {'cued HR', 'noncued HR', 'cued FAR', 'noncued FAR'};
+set(gca,'xticklabel',xlab_nms)
+set(gca,'YTick', [0:5:100]);
+set(gca,'FontSize',8);
+xlim([0 5])
+suptitle('average HR and FAR by cue presence in Expectation session:');
+
+
 
 %%
 clearvars -EXCEPT logstruct alldata master_working_folder
