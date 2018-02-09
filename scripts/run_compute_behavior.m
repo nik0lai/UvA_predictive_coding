@@ -704,21 +704,6 @@ clearvars -EXCEPT logstruct alldata master_working_folder
 % % % % % end
 %% CHECK COUNT OF TRIALS PER STIMULI, TARGET/NONTARGET, CUE
 
-total_face = sum(alldata.exp.face.Ntarget + alldata.exp.face.Nnontarget) % 6186
-total_house = sum(alldata.exp.house.Ntarget + alldata.exp.house.Nnontarget) % 6214
-total_letter = sum(alldata.exp.letter.Ntarget + alldata.exp.letter.Nnontarget) % 6200
-
-sum(total_face + total_house + total_letter) == sum(alldata.exp.all.Ntarget + alldata.exp.all.Nnontarget)
-
-% index of target and nontarget items
-targetItemIndex = strcmp(logstruct.S01_01_expectation.expectation_target, '1') & logstruct.S01_01_expectation.rotation == 180
-nontargetItemIndex = strcmp(logstruct.S01_01_expectation.expectation_target, 'None') & logstruct.S01_01_expectation.rotation == 0
-
-% contingency tables of target and nontarget items (outputs do not have the same order)
-% % % [~, ~, ~, labels] = crosstab(logstruct.S01_01_expectation.stimulus, logstruct.S01_01_expectation.prob_cue)
-% % % [~, ~, ~, labels] = crosstab(logstruct.S01_01_expectation.stimulus(targetItemIndex), logstruct.S01_01_expectation.prob_cue(targetItemIndex))
-% % % [~, ~, ~, labels] = crosstab(logstruct.S01_01_expectation.stimulus(nontargetItemIndex), logstruct.S01_01_expectation.prob_cue(nontargetItemIndex))
-
 stimuli = {'face' 'house' 'letter'};
 cues = {'face' 'house' 'letter'};
 % nTrials = zeros(numel(stimuli), numel(cues));
@@ -733,6 +718,7 @@ tarnonTar = {'nonTarget', 'target'};
 % % %   face    house   letter
 % % %  house
 % % % letter
+clear nTrials
 
 % count for stim and cue combination, for target, nonTarget and nonTarget tilted 
 for cSubj = 1:nSubj;
@@ -781,9 +767,56 @@ for cSubj = 1:nSubj;
     end
 end
 
-% exp/rel LOOP
-    % sum all subject
-        % target
-        % nontarget
-        % nontarget tilted
+uneven      = 1:2:20;
+subjects    = fields(nTrials.exp);
+tarnonTar   = {'nonTarget', 'target'};
+
+sessions    = {'exp', 'rel'}
+% add loop exp/rel
+% within rel loop add nontarget tilted
+
+for cSess = 1:numel(sessions);
+    ses = sessions{cSess};
+    sumss = {[sessions{cSess} '_nonTarget'], [sessions{cSess} '_target']};
+    subjects    = fields(nTrials.(ses));
+    
+    for cTar = 1:numel(tarnonTar);
+        currTar = tarnonTar{cTar};
+        currSum = zeros(3,3);
+        
+        for cSub = 1:numel(uneven);
+            sub = subjects{uneven(cSub)};
+            sub_1 = subjects{uneven(cSub)+1};
+            
+            currSum = currSum + nTrials.(ses).(sub).(currTar) + nTrials.(ses).(sub_1).(currTar);
+            
+        end
+        nTrials.all.(sumss{cTar}) = currSum;
+        
+        if cTar == numel(tarnonTar) && strcmp(ses, 'rel');
+            clear currSum
+            currSum = zeros(3,3);
+            for cSub = 1:numel(uneven);
+                sub = subjects{uneven(cSub)};
+                sub_1 = subjects{uneven(cSub)+1};
+                
+                currSum = currSum + nTrials.rel.(sub).nonTargetTilted + nTrials.rel.(sub_1).nonTargetTilted;
+                
+            end
+            
+            nTrials.all.rel_nonTargetTilted = currSum;
+            
+        end
+        
+    end
+    
+end
+
+nTrials.all.exp_nonTarget
+nTrials.all.exp_target
+nTrials.all.rel_nonTarget
+nTrials.all.rel_nonTargetTilted
+nTrials.all.rel_target
+
+
 
