@@ -721,33 +721,69 @@ nontargetItemIndex = strcmp(logstruct.S01_01_expectation.expectation_target, 'No
 
 stimuli = {'face' 'house' 'letter'};
 cues = {'face' 'house' 'letter'};
-nTrials = zeros(numel(stimuli), numel(cues));
+% nTrials = zeros(numel(stimuli), numel(cues));
 % participant_session loop
 % target nontarget loop
 subjects    = fields(logstruct); % get session names
 nSubj       = numel(subjects);   % number of sessions
 
+expectatTar = [0 180];
+taskRelTar = {'None', '1'}
+tarnonTar = {'nonTarget', 'target'};
+% % %   face    house   letter
+% % %  house
+% % % letter
 
+% count for stim and cue combination, for target, nonTarget and nonTarget tilted 
 for cSubj = 1:nSubj;
+    sub = subjects{cSubj};
+    %     logstruct.(sub)
     
-    for cStim = 1:numel(stimuli)
-        for cCue = 1:numel(cues)
-            nTrials(cStim,cCue) = sum(strcmp(logstruct.S01_01_expectation.stimulus, stimuli{cStim}) & strcmp(logstruct.S01_01_expectation.prob_cue, cues{cCue}));
+    if ~isempty(strfind(sub,'expectation'));
+        
+        % expect
+        for cTar = 1:numel(expectatTar);
+            currTar = tarnonTar{cTar};
+            
+            for cStim = 1:numel(stimuli)
+                for cCue = 1:numel(cues)
+                    nTrials.exp.(sub).(currTar)(cStim,cCue) = sum(logstruct.(sub).rotation == expectatTar(cTar) & ~strcmp(logstruct.(sub).stimulus, '') & ... % target trial
+                        strcmp(logstruct.(sub).stimulus, stimuli{cStim}) & ...                        % trial of current stim
+                        strcmp(logstruct.(sub).prob_cue, cues{cCue}));                                % trial of current cue
+                end
+            end
+            
+        end
+        
+    elseif ~isempty(strfind(sub,'taskRelevance'))
+        % taskReleva
+        for cTar = 1:numel(expectatTar);
+            currTar = tarnonTar{cTar};
+            
+            for cStim = 1:numel(stimuli)
+                for cCue = 1:numel(cues)
+                    nTrials.rel.(sub).(currTar)(cStim,cCue) = sum(strcmp(logstruct.(sub).task_relevance_target, taskRelTar{cTar}) & strcmp(logstruct.(sub).tilt, taskRelTar{cTar}) & ... % target trial
+                        strcmp(logstruct.(sub).stimulus, stimuli{cStim}) & ...                        % trial of current stim
+                        strcmp(logstruct.(sub).task_cue, cues{cCue}));                                % trial of current cue
+                end
+            end
+            
+        end
+        
+        % taskReleva nonTarget tilted
+        for cStim = 1:numel(stimuli)
+            for cCue = 1:numel(cues)
+                nTrials.rel.(sub).nonTargetTilted(cStim,cCue) = sum(strcmp(logstruct.(sub).task_relevance_target, 'None') & strcmp(logstruct.(sub).tilt, '1') & ... % nonTarget tilted
+                    strcmp(logstruct.(sub).stimulus, stimuli{cStim}) & ...                        % trial of current stim
+                    strcmp(logstruct.(sub).task_cue, cues{cCue}));                                % trial of current cue
+            end
         end
     end
 end
-% % % % % face_face       = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'face') & strcmp(logstruct.S01_01_expectation.prob_cue, 'face'))
-% % % % % face_house      = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'face') & strcmp(logstruct.S01_01_expectation.prob_cue, 'house'))
-% % % % % face_letter     = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'face') & strcmp(logstruct.S01_01_expectation.prob_cue, 'letter'))
-% % % % % 
-% % % % % house_house     = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'house') & strcmp(logstruct.S01_01_expectation.prob_cue, 'house'))
-% % % % % house_face      = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'house') & strcmp(logstruct.S01_01_expectation.prob_cue, 'face'))
-% % % % % house_letter    = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'house') & strcmp(logstruct.S01_01_expectation.prob_cue, 'letter'))
-% % % % % 
-% % % % % letter_letter   = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'letter') & strcmp(logstruct.S01_01_expectation.prob_cue, 'letter'))
-% % % % % letter_face     = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'letter') & strcmp(logstruct.S01_01_expectation.prob_cue, 'face'))
-% % % % % letter_house    = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'letter') & strcmp(logstruct.S01_01_expectation.prob_cue, 'house'))
 
-% target and nontarget trials
-[face_face face_house face_letter; house_face house_house house_letter; letter_face letter_house letter_letter]
+% exp/rel LOOP
+    % sum all subject
+        % target
+        % nontarget
+        % nontarget tilted
 
