@@ -222,23 +222,6 @@ for cSes = 1:numel(session)
         alldata.rel.all.Ntarget(relcount)           = sum(strcmp(data.task_relevance_target, '1'));
         alldata.rel.all.Nnontarget(relcount)        = sum(data.rotation ~= 0 & strcmp(data.task_relevance_target,'None'));
         alldata.rel.all.Ntrials                     = sum(~strcmp(data.stimulus, '') & ~strcmp(data.task_cue, ''));
-        
-% % %         % cued/noncued hitrates
-% % %         alldata.rel.all.NcuedHits(relcount)         = sum( strcmp(data.stimulus, data.task_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.task_cue, '') & strcmp(data.task_relevance_target,'1') & data.key_resp_2_rt > 0);
-% % %         alldata.rel.all.NnoncuedHits(relcount)      = sum(~strcmp(data.stimulus, data.task_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.task_cue, '') & strcmp(data.task_relevance_target,'1') & data.key_resp_2_rt > 0);
-% % %         % cued/noncued falsealarms
-% % %         alldata.rel.all.NcuedFa(relcount)           = sum( strcmp(data.stimulus, data.task_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.task_cue, '') & data.rotation ~= 0 & strcmp(data.task_relevance_target, 'None') & data.key_resp_2_rt > 0);
-% % %         alldata.rel.all.NnoncuedFa(relcount)        = sum(~strcmp(data.stimulus, data.task_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.task_cue, '') & data.rotation ~= 0 & strcmp(data.task_relevance_target, 'None') & data.key_resp_2_rt > 0);
-% % %         
-% % %         % average Cued hitrate
-% % %         alldata.rel.all.cuedHr(relcount)            = alldata.rel.all.NcuedHits(relcount) / alldata.rel.all.hits(relcount);
-% % %         % average nonCued hitrate
-% % %         alldata.rel.all.noncuedHr(relcount)         = alldata.rel.all.NnoncuedHits(relcount) / alldata.rel.all.hits(relcount);
-% % %         
-% % %         % average Cued falsealarm rate
-% % %         alldata.rel.all.cuedFar(relcount)           = alldata.rel.all.NcuedFa(relcount) / alldata.rel.all.fa(relcount);
-% % %         % average nonCued falsealarm rate
-% % %         alldata.rel.all.noncuedFar(relcount)        = alldata.rel.all.NnoncuedFa(relcount) / alldata.rel.all.fa(relcount);
 
         % average hr
         alldata.rel.all.hr(relcount)                = alldata.rel.all.hits(relcount) / alldata.rel.all.Ntarget(relcount);
@@ -255,38 +238,7 @@ for cSes = 1:numel(session)
             alldata.rel.(cond).Ntarget(relcount)    = sum(strcmp(data.task_relevance_target, '1' & strcmp(data.stimulus, cond)));
             alldata.rel.(cond).Nnontarget(relcount) = sum(data.rotation ~= 0 & strcmp(data.task_relevance_target,'None') & strcmp(data.stimulus, cond));
             alldata.rel.(cond).Ntrials              = sum(~strcmp(data.stimulus, '') & ~strcmp(data.task_cue, '') & strcmp(data.stimulus, cond)); % ALL trials
-            
-            %%%%%%%%%%%%%%%%%%%%%%%%%
-            % % %             % cued/noncued hitrates
-            % % %             alldata.rel.(cond).NcuedHits(relcount)      = sum( strcmp(data.stimulus, data.task_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.task_cue, '') & strcmp(data.task_relevance_target,'1') & data.key_resp_2_rt > 0 & ...
-            % % %                 strcmp(data.stimulus, cond));
-            % % %             alldata.rel.(cond).NnoncuedHits(relcount)   = sum(~strcmp(data.stimulus, data.task_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.task_cue, '') & strcmp(data.task_relevance_target,'1') & data.key_resp_2_rt > 0 & ...
-            % % %                 strcmp(data.stimulus, cond));
-            % % %
-            % % %             % cued/noncued falsealarms
-            % % %             alldata.rel.(cond).NcuedFa(relcount)        = sum( strcmp(data.stimulus, data.task_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.task_cue, '') & strcmp(data.task_relevance_target,'1') & data.key_resp_2_rt > 0 & ...
-            % % %                 strcmp(data.stimulus, cond));
-            % % %             alldata.rel.(cond).NnoncuedFa(relcount)     = sum(~strcmp(data.stimulus, data.task_cue) & ~strcmp(data.stimulus, '') & ~strcmp(data.task_cue, '') & strcmp(data.task_relevance_target,'1') & data.key_resp_2_rt > 0 & ...
-            % % %                 strcmp(data.stimulus, cond));
-            % % %
-            % % %             % average Cued hitrate
-            % % %             alldata.rel.(cond).cuedHr(relcount)            = alldata.rel.(cond).NcuedHits(relcount)    / alldata.rel.(cond).hits(relcount);
-            % % %             % average nonCued hitrate
-            % % %             alldata.rel.(cond).noncuedHr(relcount)         = alldata.rel.(cond).NnoncuedHits(relcount) / alldata.rel.(cond).hits(relcount);
-            % % %             % average Cued falsealarm rate
-            % % %             if alldata.rel.(cond).NcuedFa(relcount) == 0 && alldata.rel.(cond).fa(relcount) == 0;
-            % % %                 alldata.rel.(cond).cuedFar(relcount)       = 0;
-            % % %             else
-            % % %                 alldata.rel.(cond).cuedFar(relcount)       = alldata.rel.(cond).NcuedFa(relcount)    / alldata.rel.(cond).fa(relcount);
-            % % %             end
-            % % %             % average nonCued falsealarm rate
-            % % %             if alldata.rel.(cond).NnoncuedFa(relcount) == 0 && alldata.rel.(cond).fa(relcount) == 0;
-            % % %                 alldata.rel.(cond).noncuedFar(relcount)    = 0;
-            % % %             else
-            % % %                 alldata.rel.(cond).noncuedFar(relcount)    = alldata.rel.(cond).NnoncuedFa(relcount) / alldata.rel.(cond).fa(relcount);
-            % % %             end
-            %%%%%%%%%%%%%%%%%%%%%%%%%
-            
+                                 
             % average hr per condition
             alldata.rel.(cond).hr(relcount)         = alldata.rel.(cond).hits(relcount) / alldata.rel.(cond).Ntarget(relcount);
             % average far per condition
@@ -386,7 +338,7 @@ for cSubjExp = 1:nSubj/2;
     
     title([subjects{index_expectat(cSubjExp)}(1:ind_und(1)-1) ' ' subjects{index_expectat(cSubjExp)}(ind_und(2)+1:15)]); % create tittle of hist.
     xlim([0 1500]);
-%     ylim([0 20]);
+    ylim([0 85]);
     
     set(gca,'XTick',[0 500 1000 1500]);
     set(gca,'XTickLabel',{'0 ms','500 ms', '1000 ms', '1500 ms'});
@@ -424,7 +376,7 @@ for cSubjTas = 1:nSubj/2;
     
     title([subjects{index_taskRel(cSubjTas)}(1:ind_und(1)-1) ' ' subjects{index_taskRel(cSubjTas)}(ind_und(2)+1:15)]); % create tittle of hist.
     xlim([0 1500]);
-    % ylim([0 200]);
+    ylim([0 85]);
     
     set(gca,'XTick',[0 500 1000 1500]);
     set(gca,'XTickLabel',{'0 ms','500 ms', '1000 ms', '1500 ms'});
@@ -469,6 +421,8 @@ for cSubjExp = 1:nSubj/2;
     hist((logstruct.(subjects{index_expectat(cSubjExp)}).key_resp_2_rt(cuedTarget_index)*1000)+100, [0:50:1500]);
     title([subjects{index_expectat(cSubjExp)}(1:ind_und(1)-1) ' cued'])
     xlim([0 1500]);
+    ylim([0 55]);
+    set(gca,'YTick',[0 10 20 30 40 50]);
     set(gca,'XTickLabel',{'0ms','500ms', '1000ms', '1500ms'});
     set(gca,'FontSize',5);
     
@@ -480,6 +434,8 @@ for cSubjExp = 1:nSubj/2;
     hist((logstruct.(subjects{index_expectat(cSubjExp)}).key_resp_2_rt(nonCuedTarget_index)*1000)+100, [0:50:1500]);
     title([subjects{index_expectat(cSubjExp)}(1:ind_und(1)-1) ' nonCued'])
     xlim([0 1500]);
+    ylim([0 55]);
+    set(gca,'YTick',[0 10 20 30 40 50]);
     set(gca,'XTickLabel',{'0ms','500ms', '1000ms', '1500ms'});
     set(gca,'FontSize',5);
         
@@ -514,6 +470,7 @@ set(gca,'FontSize',12);
 title(currSession); % create tittle of hist. 
     xlim([300 800])
     ylim([0 10])
+    ylabel('Number of participants')
           
 end
 
