@@ -692,6 +692,60 @@ end
 clearvars -EXCEPT logstruct alldata master_working_folder
 
 %%
+% check participant 3
+
+cued03 = sum(strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue))
+tilted03 = sum(logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1'))
+
+cuedTilted03 = sum(strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ... % cued
+    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1')) % tilted
+
+nonCuedTilted03 = sum(~strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ... % nonCued
+    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1')) % tilted
+
+cuedNonTilted03 = sum(strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ... % cued
+    logstruct.S03_02_taskRelevance.rotation == 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, 'None')) % non tilted
+
+nonCuedNonTilted03 = sum(~strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ... % nonCued
+    logstruct.S03_02_taskRelevance.rotation == 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, 'None')) % non tilted
+
+Rcued = sum(logstruct.S03_02_taskRelevance.key_resp_2_rt > 0 & ... % response cued
+    strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue))
+                      
+Rtilted = sum(logstruct.S03_02_taskRelevance.key_resp_2_rt > 0 & ... % response tilted
+    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1'))
+
+RcuedTilted = sum(logstruct.S03_02_taskRelevance.key_resp_2_rt > 0 & ... % response cued tilted
+    strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ...
+    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1')) % tilted
+
+RnonCuedTilted = sum(logstruct.S03_02_taskRelevance.key_resp_2_rt > 0 & ...response
+    ~strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ... % nonCued
+    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1')) % tilted
+
+RcuedNonTilted = sum(logstruct.S03_02_taskRelevance.key_resp_2_rt > 0 & ...
+    strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ... % cued
+    logstruct.S03_02_taskRelevance.rotation == 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, 'None')) % non tilted
+
+RnonCuedNonTilted = sum(logstruct.S03_02_taskRelevance.key_resp_2_rt > 0 & ...
+    ~strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ... % nonCued
+    logstruct.S03_02_taskRelevance.rotation == 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, 'None')) % non tilted
+
+
+%%
+
+bar([(Rcued / cued03 )
+(Rtilted / tilted03)
+(RcuedTilted / cuedTilted03)
+(RcuedNonTilted / cuedNonTilted03)
+(RnonCuedTilted / nonCuedTilted03)
+(RnonCuedNonTilted / nonCuedNonTilted03)])
+
+set(gca,'XTickLabel',{'cued','tilted', 'cuedTilted', 'cuedNonTilted', 'nonCuedNonTilted', 'nonCuedNonTilted'});
+suptitle('participant 3, taskRelevance responses');
+
+
+%%
 % % % % % %% compute cue duration, retention interval duration and target duration
 % % % % % % accuracy of cue duration and retention interval seem excellent
 % % % % % subjects = fields(logstruct);
@@ -718,6 +772,7 @@ tarnonTar = {'nonTarget', 'target'};
 % % %   face    house   letter
 % % %  house
 % % % letter
+
 clear nTrials
 
 % count for stim and cue combination, for target, nonTarget and nonTarget tilted 
@@ -770,8 +825,8 @@ end
 uneven      = 1:2:20;
 subjects    = fields(nTrials.exp);
 tarnonTar   = {'nonTarget', 'target'};
-
 sessions    = {'exp', 'rel'}
+
 % add loop exp/rel
 % within rel loop add nontarget tilted
 
@@ -812,11 +867,18 @@ for cSess = 1:numel(sessions);
     
 end
 
+% trial distribution
 nTrials.all.exp_nonTarget
 nTrials.all.exp_target
 nTrials.all.rel_nonTarget
 nTrials.all.rel_nonTargetTilted
 nTrials.all.rel_target
 
+
+unique(logstruct.S01_01_expectation.expectation_cue_port) % check triggers 
+
+
+%%
+clearvars -EXCEPT logstruct alldata master_working_folder nTrials
 
 
