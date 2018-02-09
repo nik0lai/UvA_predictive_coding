@@ -592,6 +592,36 @@ suptitle('average HR and FAR by cue presence in Expectation session:');
 saveas(gcf, [master_working_folder 'Predictive_EEG/BEHAVIOR/HR_FAR_05_cuedNoncued_exp.png'])
 close(gcf)
 
+%% avrg cued and noncued HR and FAR by stimuli (face, house, letter)
+
+stimuli = {'face' 'house' 'letter'};
+
+for cStim = 1:numel(stimuli)
+
+figure; % canvas
+
+% avrgs
+stimAvrgs = [mean(alldata.exp.(stimuli{cStim}).cuedHr) ...
+    mean(alldata.exp.(stimuli{cStim}).noncuedHr) ...
+    mean(alldata.exp.(stimuli{cStim}).cuedFar) ...
+    mean(alldata.exp.(stimuli{cStim}).noncuedFar)]'*100;
+
+bar(stimAvrgs) % plot avrgs
+xlim([0 5]);
+ylim([0 100]);
+
+xlab_nms = {'cued HR', 'noncued HR', 'cued FAR', 'noncued FAR'};
+set(gca,'xticklabel',xlab_nms)
+set(gca,'YTick', [0:5:100]);
+set(gca,'FontSize',10);
+suptitle(['avrg HR and FAR by cue presence, Expectation session (' stimuli{cStim} '):']);
+
+file_name = [master_working_folder 'Predictive_EEG/BEHAVIOR/HR_FAR_06_0' num2str(cStim) '_' stimuli{cStim} '_cuedNoncued_exp.png'];
+saveas(gcf, file_name)
+close(gcf)
+
+end
+
 %%
 clearvars -EXCEPT logstruct alldata master_working_folder
 
