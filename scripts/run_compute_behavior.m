@@ -263,7 +263,6 @@ for cSes = 1:numel(session)
     end
 end
 
-alldata.exp.all
 %% clean trash and keep logfile structure (trial info) and alldata structure
 
 clearvars -EXCEPT logstruct alldata master_working_folder
@@ -293,8 +292,9 @@ for cSubj = 1:nSubj;
     ind_und = strfind(subjects{cSubj},'_'); % separators index
     title([subjects{cSubj}(1:ind_und(1)-1) ' ' subjects{cSubj}(ind_und(2)+1:15)]); % create tittle of hist. 
     xlim([0 1500]);
-    % ylim([0 200]);
+    ylim([0 85]);
     
+    set(gca,'YTick',[0:20:90]);
     set(gca,'XTick',[0 500 1000 1500]);
     set(gca,'XTickLabel',{'0 ms','500 ms', '1000 ms', '1500 ms'});
     set(gca,'FontSize',6);
@@ -445,6 +445,72 @@ figure(RThistExpectatCues);
 suptitle('histograms of RTs, cued and non cued Target trials:');
 saveas(RThistExpectatCues, [master_working_folder 'Predictive_EEG/BEHAVIOR/RTs_05_exptatCuesTarget.png'])
 close(gcf)
+
+%% 
+% expectation cued/noncued TARGET trials by stimuli (face, house, letter)
+
+subjects            = fields(logstruct); % get session names
+nSubj               = numel(subjects);   % number of sessions
+index_expectat      = find(~cellfun(@isempty,strfind(fields(logstruct), 'expectation'))); % get expectation sessions index
+
+uneven              = 1:2:40; % first loop in uneven numbers from 1 to 20
+
+stimuli = {'face' 'house' 'letter'};
+
+for cStim = 1:numel(stimuli)
+    
+    figure; % canvas
+    
+    for cSubjExp = 1:nSubj/2;
+        
+        % get cued and noncued target trials index
+        cuedTarget_index    = strcmp(logstruct.(subjects{index_expectat(cSubjExp)}).stimulus, logstruct.(subjects{index_expectat(cSubjExp)}).prob_cue) & ... % cued trials
+            ~strcmp(logstruct.(subjects{index_expectat(cSubjExp)}).stimulus, '') & logstruct.(subjects{index_expectat(cSubjExp)}).rotation == 180 & ... % target trials
+             strcmp(logstruct.(subjects{index_expectat(cSubjExp)}).stimulus, stimuli{cStim}); % stimuli trial
+        
+        nonCuedTarget_index = ~strcmp(logstruct.(subjects{index_expectat(cSubjExp)}).stimulus, logstruct.(subjects{index_expectat(cSubjExp)}).prob_cue) & ... % non cued trials
+            ~strcmp(logstruct.(subjects{index_expectat(cSubjExp)}).stimulus, '') & logstruct.(subjects{index_expectat(cSubjExp)}).rotation == 180 & ... % target trials
+             strcmp(logstruct.(subjects{index_expectat(cSubjExp)}).stimulus, stimuli{cStim}); % stimuli trial
+                
+        ind_und = strfind(subjects{index_expectat(cSubjExp)},'_'); % separators index
+        
+        % fig again
+%         figure(RThistExpectatCues);
+        
+        % plot cued
+        subplot(floor(sqrt(nSubj)), ceil(sqrt(nSubj)), uneven(cSubjExp)); % create a grid for plots
+        % plot cued target trials RTs
+        hist((logstruct.(subjects{index_expectat(cSubjExp)}).key_resp_2_rt(cuedTarget_index)*1000)+100, [0:50:1500]);
+        title([subjects{index_expectat(cSubjExp)}(1:ind_und(1)-1) ' cued'])
+        xlim([0 1500]);
+        ylim([0 25]);
+        set(gca,'YTick',[0:5:20]);
+        set(gca,'XTickLabel',{'0ms','500ms', '1000ms', '1500ms'});
+        set(gca,'FontSize',5);
+        
+%         figure(RThistExpectatCues);
+        
+        % plot non cued
+        subplot(floor(sqrt(nSubj)), ceil(sqrt(nSubj)), uneven(cSubjExp)+1); % create a grid for plots
+        % plot cued target trials RTs
+        hist((logstruct.(subjects{index_expectat(cSubjExp)}).key_resp_2_rt(nonCuedTarget_index)*1000)+100, [0:50:1500]);
+        title([subjects{index_expectat(cSubjExp)}(1:ind_und(1)-1) ' nonCued'])
+        xlim([0 1500]);
+        ylim([0 25]);
+        set(gca,'YTick',[0:5:20]);
+        set(gca,'XTickLabel',{'0ms','500ms', '1000ms', '1500ms'});
+        set(gca,'FontSize',5);
+        
+    end
+       
+    suptitle(['RTs hist, cued and non cued Target trials (' stimuli{cStim} '):']);
+    
+    fileName = [master_working_folder 'Predictive_EEG/BEHAVIOR/RTs_06_0' num2str(cStim) '_' stimuli{cStim} '_exptatCuesTarget.png'];
+    
+    saveas(gcf, fileName);
+    close(gcf)
+    
+end
 
 %%
 clearvars -EXCEPT logstruct alldata master_working_folder
@@ -638,9 +704,9 @@ clearvars -EXCEPT logstruct alldata master_working_folder
 % % % % % end
 %% CHECK COUNT OF TRIALS PER STIMULI, TARGET/NONTARGET, CUE
 
-total_face = sum(alldata.exp.face.Ntarget + alldata.exp.face.Nnontarget)
-total_house = sum(alldata.exp.house.Ntarget + alldata.exp.house.Nnontarget)
-total_letter = sum(alldata.exp.letter.Ntarget + alldata.exp.letter.Nnontarget)
+total_face = sum(alldata.exp.face.Ntarget + alldata.exp.face.Nnontarget) % 6186
+total_house = sum(alldata.exp.house.Ntarget + alldata.exp.house.Nnontarget) % 6214
+total_letter = sum(alldata.exp.letter.Ntarget + alldata.exp.letter.Nnontarget) % 6200
 
 sum(total_face + total_house + total_letter) == sum(alldata.exp.all.Ntarget + alldata.exp.all.Nnontarget)
 
@@ -655,26 +721,32 @@ nontargetItemIndex = strcmp(logstruct.S01_01_expectation.expectation_target, 'No
 
 stimuli = {'face' 'house' 'letter'};
 cues = {'face' 'house' 'letter'};
-
+nTrials = zeros(numel(stimuli), numel(cues));
 % participant_session loop
 % target nontarget loop
-for cStim = 1:numel(stimuli)
-    for cCue = 1:numel(cues)
-        nTrials(cStim,cCue) = sum(strcmp(logstruct.S01_01_expectation.stimulus, stimuli{cStim}) & strcmp(logstruct.S01_01_expectation.prob_cue, cues{cCue}));
+subjects    = fields(logstruct); % get session names
+nSubj       = numel(subjects);   % number of sessions
+
+
+for cSubj = 1:nSubj;
+    
+    for cStim = 1:numel(stimuli)
+        for cCue = 1:numel(cues)
+            nTrials(cStim,cCue) = sum(strcmp(logstruct.S01_01_expectation.stimulus, stimuli{cStim}) & strcmp(logstruct.S01_01_expectation.prob_cue, cues{cCue}));
+        end
     end
 end
-
-face_face       = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'face') & strcmp(logstruct.S01_01_expectation.prob_cue, 'face'))
-face_house      = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'face') & strcmp(logstruct.S01_01_expectation.prob_cue, 'house'))
-face_letter     = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'face') & strcmp(logstruct.S01_01_expectation.prob_cue, 'letter'))
-
-house_house     = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'house') & strcmp(logstruct.S01_01_expectation.prob_cue, 'house'))
-house_face      = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'house') & strcmp(logstruct.S01_01_expectation.prob_cue, 'face'))
-house_letter    = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'house') & strcmp(logstruct.S01_01_expectation.prob_cue, 'letter'))
-
-letter_letter   = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'letter') & strcmp(logstruct.S01_01_expectation.prob_cue, 'letter'))
-letter_face     = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'letter') & strcmp(logstruct.S01_01_expectation.prob_cue, 'face'))
-letter_house    = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'letter') & strcmp(logstruct.S01_01_expectation.prob_cue, 'house'))
+% % % % % face_face       = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'face') & strcmp(logstruct.S01_01_expectation.prob_cue, 'face'))
+% % % % % face_house      = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'face') & strcmp(logstruct.S01_01_expectation.prob_cue, 'house'))
+% % % % % face_letter     = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'face') & strcmp(logstruct.S01_01_expectation.prob_cue, 'letter'))
+% % % % % 
+% % % % % house_house     = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'house') & strcmp(logstruct.S01_01_expectation.prob_cue, 'house'))
+% % % % % house_face      = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'house') & strcmp(logstruct.S01_01_expectation.prob_cue, 'face'))
+% % % % % house_letter    = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'house') & strcmp(logstruct.S01_01_expectation.prob_cue, 'letter'))
+% % % % % 
+% % % % % letter_letter   = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'letter') & strcmp(logstruct.S01_01_expectation.prob_cue, 'letter'))
+% % % % % letter_face     = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'letter') & strcmp(logstruct.S01_01_expectation.prob_cue, 'face'))
+% % % % % letter_house    = sum(strcmp(logstruct.S01_01_expectation.stimulus, 'letter') & strcmp(logstruct.S01_01_expectation.prob_cue, 'house'))
 
 % target and nontarget trials
 [face_face face_house face_letter; house_face house_house house_letter; letter_face letter_house letter_letter]
