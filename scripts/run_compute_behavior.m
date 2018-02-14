@@ -754,7 +754,7 @@ suptitle('participant 3, taskRelevance responses');
 % % % % %     durations.(subjects{cSubj}).cue_duration       = tabulate(-(round(1000*(logstruct.(subjects{cSubj}).cue_stop(4:end) - logstruct.(subjects{cSubj}).cue_start(4:end)))));
 % % % % %     durations.(subjects{cSubj}).retention_duration = tabulate(-(round(1000*(logstruct.(subjects{cSubj}).stim_image_start(4:end) - logstruct.(subjects{cSubj}).cue_stop(4:end)))));
 % % % % %     durations.(subjects{cSubj}).target_duration    = tabulate(-(round(1000*(logstruct.(subjects{cSubj}).stim_image_stop(4:end) - logstruct.(subjects{cSubj}).stim_image_start(4:end)))));
-% % % % %     %durations.(subjects{cSubj}).cue_duration
+% % % % %     
 % % % % % end
 %% CHECK COUNT OF TRIALS PER STIMULI, TARGET/NONTARGET, CUE
 
