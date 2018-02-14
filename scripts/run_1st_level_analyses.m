@@ -64,8 +64,8 @@ cfg.resample = 128;
 cfg.nfolds = 10;
 cfg.raw_or_tfr = 'raw';
 cfg.channels = 'ALL'; % ALL, OCCIP and OCCIPARIETAL
-cfg.clean_window = [.3 2.8];  % wait-interval + test item
-cfg.erp_baseline = [-2.25,0]; % 250 ms of the fixation period
+% cfg.clean_window = [.3 2.8];  % wait-interval + test item
+cfg.erp_baseline = [-2.25,-2]; % 250 ms of the fixation period
 
 %% 01. Classify cue in EXPECTATION condition (no response was given) (DONE)
 cfg.class_spec{1} = cond_string(prediction,cue_face,upright);
