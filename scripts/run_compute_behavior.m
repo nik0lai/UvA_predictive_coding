@@ -287,14 +287,14 @@ for cSubj = 1:nSubj;
     end
     
     %disp(numel(find(index)));
-    hist((logstruct.(subjects{cSubj}).key_resp_2_rt(index)*1000)+100, [0:50:1500]);
+    hist((logstruct.(subjects{cSubj}).key_resp_2_rt(index)*1000)+100, 0:50:1500);
     
     ind_und = strfind(subjects{cSubj},'_'); % separators index
     title([subjects{cSubj}(1:ind_und(1)-1) ' ' subjects{cSubj}(ind_und(2)+1:15)]); % create tittle of hist. 
     xlim([0 1500]);
     ylim([0 85]);
     
-    set(gca,'YTick',[0:20:90]);
+    set(gca,'YTick',0:20:90);
     set(gca,'XTick',[0 500 1000 1500]);
     set(gca,'XTickLabel',{'0 ms','500 ms', '1000 ms', '1500 ms'});
     set(gca,'FontSize',6);
@@ -332,7 +332,7 @@ for cSubjExp = 1:nSubj/2;
     end
     
     %disp(numel(find(index)));
-    hist((logstruct.(subjects{index_expectat(cSubjExp)}).key_resp_2_rt(index)*1000)+100, [0:50:1500]);
+    hist((logstruct.(subjects{index_expectat(cSubjExp)}).key_resp_2_rt(index)*1000)+100, 0:50:1500);
     
     ind_und = strfind(subjects{index_expectat(cSubjExp)},'_'); % separators index
     
@@ -370,7 +370,7 @@ for cSubjTas = 1:nSubj/2;
     end
     
     %disp(numel(find(index)));
-    hist((logstruct.(subjects{index_taskRel(cSubjTas)}).key_resp_2_rt(index)*1000)+100, [0:50:1500]);
+    hist((logstruct.(subjects{index_taskRel(cSubjTas)}).key_resp_2_rt(index)*1000)+100, 0:50:1500);
     
     ind_und = strfind(subjects{index_taskRel(cSubjTas)},'_'); % separators index
     
@@ -418,7 +418,7 @@ for cSubjExp = 1:nSubj/2;
     % plot cued
     subplot(floor(sqrt(nSubj)), ceil(sqrt(nSubj)), uneven(cSubjExp)); % create a grid for plots
     % plot cued target trials RTs
-    hist((logstruct.(subjects{index_expectat(cSubjExp)}).key_resp_2_rt(cuedTarget_index)*1000)+100, [0:50:1500]);
+    hist((logstruct.(subjects{index_expectat(cSubjExp)}).key_resp_2_rt(cuedTarget_index)*1000)+100, 0:50:1500);
     title([subjects{index_expectat(cSubjExp)}(1:ind_und(1)-1) ' cued'])
     xlim([0 1500]);
     ylim([0 55]);
@@ -431,7 +431,7 @@ for cSubjExp = 1:nSubj/2;
     % plot non cued
     subplot(floor(sqrt(nSubj)), ceil(sqrt(nSubj)), uneven(cSubjExp)+1); % create a grid for plots
     % plot cued target trials RTs
-    hist((logstruct.(subjects{index_expectat(cSubjExp)}).key_resp_2_rt(nonCuedTarget_index)*1000)+100, [0:50:1500]);
+    hist((logstruct.(subjects{index_expectat(cSubjExp)}).key_resp_2_rt(nonCuedTarget_index)*1000)+100, 0:50:1500);
     title([subjects{index_expectat(cSubjExp)}(1:ind_und(1)-1) ' nonCued'])
     xlim([0 1500]);
     ylim([0 55]);
@@ -480,11 +480,11 @@ for cStim = 1:numel(stimuli)
         % plot cued
         subplot(floor(sqrt(nSubj)), ceil(sqrt(nSubj)), uneven(cSubjExp)); % create a grid for plots
         % plot cued target trials RTs
-        hist((logstruct.(subjects{index_expectat(cSubjExp)}).key_resp_2_rt(cuedTarget_index)*1000)+100, [0:50:1500]);
+        hist((logstruct.(subjects{index_expectat(cSubjExp)}).key_resp_2_rt(cuedTarget_index)*1000)+100, 0:50:1500);
         title([subjects{index_expectat(cSubjExp)}(1:ind_und(1)-1) ' cued'])
         xlim([0 1500]);
         ylim([0 25]);
-        set(gca,'YTick',[0:5:20]);
+        set(gca,'YTick',0:5:20);
         set(gca,'XTickLabel',{'0ms','500ms', '1000ms', '1500ms'});
         set(gca,'FontSize',5);
         
@@ -493,11 +493,11 @@ for cStim = 1:numel(stimuli)
         % plot non cued
         subplot(floor(sqrt(nSubj)), ceil(sqrt(nSubj)), uneven(cSubjExp)+1); % create a grid for plots
         % plot cued target trials RTs
-        hist((logstruct.(subjects{index_expectat(cSubjExp)}).key_resp_2_rt(nonCuedTarget_index)*1000)+100, [0:50:1500]);
+        hist((logstruct.(subjects{index_expectat(cSubjExp)}).key_resp_2_rt(nonCuedTarget_index)*1000)+100, 0:50:1500);
         title([subjects{index_expectat(cSubjExp)}(1:ind_und(1)-1) ' nonCued'])
         xlim([0 1500]);
         ylim([0 25]);
-        set(gca,'YTick',[0:5:20]);
+        set(gca,'YTick',0:5:20);
         set(gca,'XTickLabel',{'0ms','500ms', '1000ms', '1500ms'});
         set(gca,'FontSize',5);
         
@@ -528,7 +528,7 @@ currSession = char(sessionsNms(cSess));
 currSession(1:3)
 
 subplot(1,2,cSess)
-hist(alldata.(currSession(1:3)).all.RT*1000, [0:50:1000])
+hist(alldata.(currSession(1:3)).all.RT*1000, 0:50:1000)
 set(gca,'XTick', [300 500 800]);
 set(gca,'XTickLabel',{'300 ms','500 ms', '800 ms'});
 set(gca,'FontSize',12);
@@ -557,7 +557,7 @@ colormap(mycolor);
 bar([alldata.exp.all.hr; alldata.exp.all.far; alldata.rel.all.hr; alldata.rel.all.far]');
 set(gca,'FontSize',6);
 xlim([0 21])
-set(gca,'XTick',[1:20]);
+set(gca,'XTick',1:20);
 h = legend('prediction HR', 'prediction FAR', 'task relevance HR', 'task relevance FAR');
 set(h,'FontSize',9);
 suptitle('hit rate and false alarm rate by session type:');
@@ -573,7 +573,7 @@ colormap(mycolor);
 bar([alldata.exp.all.hr; alldata.exp.all.far]');
 set(gca,'FontSize',6);
 xlim([0 21])
-set(gca,'XTick',[1:20]);
+set(gca,'XTick',1:20);
 h = legend('prediction HR', 'prediction FAR');
 set(h,'FontSize',9);
 suptitle('hit rate and false alarm rate in expectation task:');
@@ -588,7 +588,7 @@ colormap(mycolor);
 bar([alldata.rel.all.hr; alldata.rel.all.far]');
 set(gca,'FontSize',6);
 xlim([0 21])
-set(gca,'XTick',[1:20]);
+set(gca,'XTick',1:20);
 h = legend('task relevance HR', 'task relevance FAR');
 set(h,'FontSize',9);
 suptitle('hit rate and false alarm rate in task relevance:');
@@ -609,9 +609,9 @@ avrg_hr_far = [mean(alldata.exp.all.hr) ...
     mean(alldata.rel.all.far)]'*100;
 
 bar(avrg_hr_far )
-xlab_nms = {'prediction HR', 'prediction FAR', 'taskRelevance HR', 'taskRelevance FAR'}
+xlab_nms = {'prediction HR', 'prediction FAR', 'taskRelevance HR', 'taskRelevance FAR'};
 set(gca,'xticklabel',xlab_nms)
-set(gca,'YTick', [0:5:100]);
+set(gca,'YTick', 0:5:100);
 set(gca,'FontSize',8);
 xlim([0 5])
 suptitle('average HR and FAR by session:');
@@ -651,7 +651,7 @@ xlim([0 5]);
 ylim([0 100]);
 xlab_nms = {'cued HR', 'noncued HR', 'cued FAR', 'noncued FAR'};
 set(gca,'xticklabel',xlab_nms)
-set(gca,'YTick', [0:5:100]);
+set(gca,'YTick', 0:5:100);
 set(gca,'FontSize',10);
 suptitle('average HR and FAR by cue presence in Expectation session:');
 
@@ -678,7 +678,7 @@ ylim([0 100]);
 
 xlab_nms = {'cued HR', 'noncued HR', 'cued FAR', 'noncued FAR'};
 set(gca,'xticklabel',xlab_nms)
-set(gca,'YTick', [0:5:100]);
+set(gca,'YTick', 0:5:100);
 set(gca,'FontSize',10);
 suptitle(['avrg HR and FAR by cue presence, Expectation session (' stimuli{cStim} '):']);
 
@@ -694,45 +694,45 @@ clearvars -EXCEPT logstruct alldata master_working_folder
 %%
 % check participant 3
 
-cued03 = sum(strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue))
-tilted03 = sum(logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1'))
+cued03 = sum(strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue));
+tilted03 = sum(logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1'));
 
 cuedTilted03 = sum(strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ... % cued
-    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1')) % tilted
+    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1')); % tilted
 
 nonCuedTilted03 = sum(~strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ... % nonCued
-    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1')) % tilted
+    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1')); % tilted
 
 cuedNonTilted03 = sum(strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ... % cued
-    logstruct.S03_02_taskRelevance.rotation == 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, 'None')) % non tilted
+    logstruct.S03_02_taskRelevance.rotation == 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, 'None')); % non tilted
 
 nonCuedNonTilted03 = sum(~strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ... % nonCued
-    logstruct.S03_02_taskRelevance.rotation == 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, 'None')) % non tilted
+    logstruct.S03_02_taskRelevance.rotation == 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, 'None')); % non tilted
 
 Rcued = sum(logstruct.S03_02_taskRelevance.key_resp_2_rt > 0 & ... % response cued
-    strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue))
+    strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue));
                       
 Rtilted = sum(logstruct.S03_02_taskRelevance.key_resp_2_rt > 0 & ... % response tilted
-    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1'))
+    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1'));
 
 RcuedTilted = sum(logstruct.S03_02_taskRelevance.key_resp_2_rt > 0 & ... % response cued tilted
     strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ...
-    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1')) % tilted
+    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1')); % tilted
 
 RnonCuedTilted = sum(logstruct.S03_02_taskRelevance.key_resp_2_rt > 0 & ...response
     ~strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ... % nonCued
-    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1')) % tilted
+    logstruct.S03_02_taskRelevance.rotation ~= 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, '1')); % tilted
 
 RcuedNonTilted = sum(logstruct.S03_02_taskRelevance.key_resp_2_rt > 0 & ...
     strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ... % cued
-    logstruct.S03_02_taskRelevance.rotation == 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, 'None')) % non tilted
+    logstruct.S03_02_taskRelevance.rotation == 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, 'None')); % non tilted
 
 RnonCuedNonTilted = sum(logstruct.S03_02_taskRelevance.key_resp_2_rt > 0 & ...
     ~strcmp(logstruct.S03_02_taskRelevance.stimulus, logstruct.S03_02_taskRelevance.task_cue) & ... % nonCued
-    logstruct.S03_02_taskRelevance.rotation == 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, 'None')) % non tilted
+    logstruct.S03_02_taskRelevance.rotation == 0 & ~isnan(logstruct.S03_02_taskRelevance.rotation) & strcmp(logstruct.S03_02_taskRelevance.tilt, 'None')); % non tilted
 
 
-%%
+%% participant 3 ratios
 
 bar([(Rcued / cued03 )
 (Rtilted / tilted03)
@@ -743,7 +743,7 @@ bar([(Rcued / cued03 )
 
 set(gca,'XTickLabel',{'cued','tilted', 'cuedTilted', 'cuedNonTilted', 'nonCuedNonTilted', 'nonCuedNonTilted'});
 suptitle('participant 3, taskRelevance responses');
-
+close(gcf)
 
 %%
 % % % % % %% compute cue duration, retention interval duration and target duration
@@ -756,53 +756,59 @@ suptitle('participant 3, taskRelevance responses');
 % % % % %     durations.(subjects{cSubj}).target_duration    = tabulate(-(round(1000*(logstruct.(subjects{cSubj}).stim_image_stop(4:end) - logstruct.(subjects{cSubj}).stim_image_start(4:end)))));
 % % % % %     
 % % % % % end
+
+%%
+clearvars -EXCEPT logstruct alldata master_working_folder nTrials
+
 %% CHECK COUNT OF TRIALS PER STIMULI, TARGET/NONTARGET, CUE
 
-stimuli = {'face' 'house' 'letter'};
-cues = {'face' 'house' 'letter'};
-% nTrials = zeros(numel(stimuli), numel(cues));
-% participant_session loop
-% target nontarget loop
-subjects    = fields(logstruct); % get session names
-nSubj       = numel(subjects);   % number of sessions
+stimuli     = {'face' 'house' 'letter'}; % to loop through
+cues        = {'face' 'house' 'letter'}; % to loop through
+subjects    = fields(logstruct);         % get session names
+nSubj       = numel(subjects);           % number of sessions
 
-expectatTar = [0 180];
-taskRelTar = {'None', '1'}
-tarnonTar = {'nonTarget', 'target'};
+expectatTar = [0 180];                   % to identify target and non-target trials
+taskRelTar  = {'None', '1'};              % to identify target and non-target trials
+tarnonTar   = {'nonTarget', 'target'};   % to loop through target and non-target trials
+
+% % % N trial count tables will have this distribution
 % % %   face    house   letter
 % % %  house
 % % % letter
 
-clear nTrials
+clear nTrials % in case of re-running
 
-% count for stim and cue combination, for target, nonTarget and nonTarget tilted 
+% count trial by cue and stim combination, 
+% % for target and nonTarget trials
+% % and nonTarget tilted trials for task relevance session.
+
 for cSubj = 1:nSubj;
     sub = subjects{cSubj};
-    %     logstruct.(sub)
+      
     
-    if ~isempty(strfind(sub,'expectation'));
-        
-        % expect
-        for cTar = 1:numel(expectatTar);
+    if ~isempty(strfind(sub,'expectation')); % Check if Expectation session
+                
+        for cTar = 1:numel(expectatTar);    % loop through target and non-target trials
             currTar = tarnonTar{cTar};
             
-            for cStim = 1:numel(stimuli)
-                for cCue = 1:numel(cues)
-                    nTrials.exp.(sub).(currTar)(cStim,cCue) = sum(logstruct.(sub).rotation == expectatTar(cTar) & ~strcmp(logstruct.(sub).stimulus, '') & ... % target trial
-                        strcmp(logstruct.(sub).stimulus, stimuli{cStim}) & ...                        % trial of current stim
-                        strcmp(logstruct.(sub).prob_cue, cues{cCue}));                                % trial of current cue
+            for cStim = 1:numel(stimuli)    % loop through stim
+                for cCue = 1:numel(cues)    % loop through cue
+                    nTrials.exp.(sub).(currTar)(cStim,cCue) = sum(logstruct.(sub).rotation == expectatTar(cTar) & ...
+                                                                  ~strcmp(logstruct.(sub).stimulus, '') & ...             % target trial
+                                                                   strcmp(logstruct.(sub).stimulus, stimuli{cStim}) & ... % trial of current stim
+                                                                   strcmp(logstruct.(sub).prob_cue, cues{cCue}));         % trial of current cue
                 end
             end
             
         end
         
-    elseif ~isempty(strfind(sub,'taskRelevance'))
-        % taskReleva
-        for cTar = 1:numel(expectatTar);
+    elseif ~isempty(strfind(sub,'taskRelevance')) % Check if taskRelevance session
+        
+        for cTar = 1:numel(expectatTar);    % loop through target and non-target trials
             currTar = tarnonTar{cTar};
             
-            for cStim = 1:numel(stimuli)
-                for cCue = 1:numel(cues)
+            for cStim = 1:numel(stimuli)    % loop through stim
+                for cCue = 1:numel(cues)    % loop through cue
                     nTrials.rel.(sub).(currTar)(cStim,cCue) = sum(strcmp(logstruct.(sub).task_relevance_target, taskRelTar{cTar}) & strcmp(logstruct.(sub).tilt, taskRelTar{cTar}) & ... % target trial
                         strcmp(logstruct.(sub).stimulus, stimuli{cStim}) & ...                        % trial of current stim
                         strcmp(logstruct.(sub).task_cue, cues{cCue}));                                % trial of current cue
@@ -810,9 +816,8 @@ for cSubj = 1:nSubj;
             end
             
         end
-        
-        % taskReleva nonTarget tilted
-        for cStim = 1:numel(stimuli)
+                
+        for cStim = 1:numel(stimuli)    % WITHIN taskRelevance session CHECK if non-target tilted trial
             for cCue = 1:numel(cues)
                 nTrials.rel.(sub).nonTargetTilted(cStim,cCue) = sum(strcmp(logstruct.(sub).task_relevance_target, 'None') & strcmp(logstruct.(sub).tilt, '1') & ... % nonTarget tilted
                     strcmp(logstruct.(sub).stimulus, stimuli{cStim}) & ...                        % trial of current stim
@@ -822,13 +827,12 @@ for cSubj = 1:nSubj;
     end
 end
 
+%% Calculate trial count accross participants
+
 uneven      = 1:2:20;
 subjects    = fields(nTrials.exp);
 tarnonTar   = {'nonTarget', 'target'};
-sessions    = {'exp', 'rel'}
-
-% add loop exp/rel
-% within rel loop add nontarget tilted
+sessions    = {'exp', 'rel'};
 
 for cSess = 1:numel(sessions);
     ses = sessions{cSess};
@@ -874,9 +878,21 @@ nTrials.all.rel_nonTarget
 nTrials.all.rel_nonTargetTilted
 nTrials.all.rel_target
 
+%%
+% save tables to .csv
+fields = fieldnames(nTrials.all);
+names={'face' 'house' 'letter'};
 
-unique(logstruct.S01_01_expectation.expectation_cue_port) % check triggers 
-
+for cField = 1:numel(fields);
+    currField= fields{cField};
+    
+    currTable = array2table(nTrials.all.(currField), 'VariableNames', names, 'RowNames', names);
+    
+    writetable(currTable, [master_working_folder 'Predictive_EEG/BEHAVIOR/trial_count/' currField '.csv'], 'WriteRowNames', true)
+    
+    clear currTable;
+    
+end
 
 %%
 clearvars -EXCEPT logstruct alldata master_working_folder nTrials
