@@ -43,7 +43,7 @@ stim_letter = [3 6 9 13 16 19 23 26 29 33 36 39];
 % targets and non-targets in prediction session
 upright = 1:9;                        % non-target (do not press)
 upsidedown = 11:19;                   % target (press space bar)
-predicted = [1 5 9 11 16 19];         % targets and non-targets (no relation to button press)
+predicted = [1 5 9 11 15 19];         % targets and non-targets (no relation to button press)
 nonpredicted = [2:4 6:8 12:14 16:18]; % targets and non-targets (no relation to button press)
 
 % targets and non-targets in task relevance session
@@ -65,21 +65,71 @@ cfg.nfolds = 10;
 cfg.raw_or_tfr = 'raw';
 cfg.channels = 'ALL'; % ALL, OCCIP and OCCIPARIETAL
 cfg.clean_window = [.3 2.8];  % wait-interval + test item
-cfg.erp_baseline = [-2.25,-2]; % 250 ms of the fixation period
+cfg.erp_baseline = [-2.25,0]; % 250 ms of the fixation period
 
-%% Classify cue in expectation condition (no response was given)
-cfg.cond{1} = cond_string(prediction,cue_face,upright);
-cfg.cond{2} = cond_string(prediction,cue_house,upright);
-cfg.cond{3} = cond_string(prediction,cue_letter,upright);
+%% 01. Classify cue in EXPECTATION condition (no response was given) (DONE)
+cfg.class_spec{1} = cond_string(prediction,cue_face,upright);
+cfg.class_spec{2} = cond_string(prediction,cue_house,upright);
+cfg.class_spec{3} = cond_string(prediction,cue_letter,upright);
 cfg.filenames = files_expectation;
-cfg.outputdir = 'C:\Prediction_exp\MVPA_RESULTS\PREDICT_CUE';
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_EXP/PRED_CUE';
 adam_MVPA_firstlevel(cfg);
 
-%% Classify cue in task relevance condition (no response was given)
-cfg.cond{1} = cond_string(task_relevance,cue_face,upright,non_tilted);
-cfg.cond{2} = cond_string(task_relevance,cue_house,upright,non_tilted);
-cfg.cond{3} = cond_string(task_relevance,cue_letter,upright,non_tilted);
-filenames = files_taskrelevance;
-outpath = 'C:\Prediction_exp\MVPA_RESULTS\TASKREL_CUE';
+%% 02. Classify cue in RELEVANCE TASK condition (no response was given) (re-DO)
+cfg.class_spec{1} = cond_string(task_relevance,cue_face,non_tilted);
+cfg.class_spec{2} = cond_string(task_relevance,cue_house,non_tilted);
+cfg.class_spec{3} = cond_string(task_relevance,cue_letter,non_tilted);
+cfg.filenames = files_taskrelevance;
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_REL/PRED_CUE';
 adam_MVPA_firstlevel(cfg);
 
+%% 03. Classify predicted stim in EXPECTATION condition (being done)
+cfg.class_spec{1} = cond_string(prediction,stim_face,upright,predicted);
+cfg.class_spec{2} = cond_string(prediction,stim_house,upright,predicted);
+cfg.class_spec{3} = cond_string(prediction,stim_letter,upright,predicted);
+cfg.filenames = files_expectation;
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_EXP/PRED_STIM';
+adam_MVPA_firstlevel(cfg);
+
+%% 04. Classify nonpredicted stim in EXPECTATION cond (being done)
+cfg.class_spec{1} = cond_string(prediction,stim_face,upright,nonpredicted);
+cfg.class_spec{2} = cond_string(prediction,stim_house,upright,nonpredicted);
+cfg.class_spec{3} = cond_string(prediction,stim_letter,upright,nonpredicted);
+cfg.filenames = files_expectation;
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_EXP/NONPRED_STIM';
+adam_MVPA_firstlevel(cfg);
+
+%% 05. Classify category-correct stim in RELEVANCE cond (being done)
+cfg.class_spec{1} = cond_string(task_relevance,stim_face,non_tilted, category_correct);
+cfg.class_spec{2} = cond_string(task_relevance,stim_house,non_tilted, category_correct);
+cfg.class_spec{3} = cond_string(task_relevance,stim_letter,non_tilted, category_correct);
+cfg.filenames = files_taskrelevance;
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_REL/CATCORR_STIM';
+adam_MVPA_firstlevel(cfg);
+
+%% 06. Classify category-incorrect stim in RELEVANCE cond (being done)
+cfg.class_spec{1} = cond_string(task_relevance,stim_face,non_tilted, category_incorrect);
+cfg.class_spec{2} = cond_string(task_relevance,stim_house,non_tilted, category_incorrect);
+cfg.class_spec{3} = cond_string(task_relevance,stim_letter,non_tilted, category_incorrect);
+cfg.filenames = files_taskrelevance;
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_REL/CATINCORR_STIM';
+adam_MVPA_firstlevel(cfg);
+
+%%  RUN THIS TWO
+% how to group two sets of stim?
+% this seems right
+%% Classify FACE VS. NONFACE cue in EXPECTATION condition (no response was given)
+cfg.class_spec{1} = cond_string(prediction,cue_face,upright);
+cfg.class_spec{2} = [cond_string(prediction,cue_house,upright) ',' cond_string(prediction,cue_letter,upright)];
+cfg.filenames = files_expectation;
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_EXP/PRED_CUE_FACENONFACE';
+adam_MVPA_firstlevel(cfg);
+
+%% Classify cue in RELEVANCE TASK condition (no response was given)
+cfg.class_spec{1} = cond_string(task_relevance,cue_face,non_tilted);
+cfg.class_spec{2} = [cond_string(task_relevance,cue_house,non_tilted) ',' cond_string(task_relevance,cue_letter,non_tilted)];
+cfg.filenames = files_taskrelevance;
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_REL/PRED_CUE_FACENONFACE';
+adam_MVPA_firstlevel(cfg);
+
+strcat(cond_string(prediction,cue_house,upright), ',', cond_string(prediction,cue_letter,upright))
