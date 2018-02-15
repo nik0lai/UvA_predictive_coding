@@ -55,7 +55,7 @@ category_correct_tilted = intersect(category_correct,tilted); % target (press sp
 
 %%
 cfg = [];
-cfg.datadir            = 'FILL WITH DATA DIR'; % put the actual source directory here
+cfg.datadir            = '/home/nicolas1/Documents/predictive_eeg/EEGLAB_DATA'; % put the actual source directory here
 cfg.filenames          = filenames;
 cfg.balance_triggers   = 'no';
 cfg.class_type         = 'linear';
@@ -64,14 +64,21 @@ cfg.crossclass         = 'yes';
 cfg.resample           = 64;
 cfg.nfolds             = 10;
 cfg.raw_or_tfr         = 'raw';
-cfg.channels           = 'ALL'; % ALL, OCCIP and OCCIPARIETAL
-cfg.clean_window       = [.3 2.8];  % wait-interval + test item
-cfg.erp_baseline       = [-2.25,0]; % 250 ms of the fixation period
+cfg.channels           = {'ALL' 'OCCIP' 'FRONTAL'}; % ALL, OCCIP and OCCIPARIETAL
+% cfg.clean_window       = [.3 2.8];  % wait-interval + test item
+cfg.erp_baseline       = [-2.25,-2]; % 250 ms of the fixation period
 
-%% 01. Classify cue in EXPECTATION condition (no response was given) (DONE)
+%% 01. Classify cue in EXPECTATION session (no response was given) (DONE)
 cfg.class_spec{1} = cond_string(prediction,cue_face,upright);
 cfg.class_spec{2} = cond_string(prediction,cue_house,upright);
 cfg.class_spec{3} = cond_string(prediction,cue_letter,upright);
 cfg.filenames = files_expectation;
-cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_EXP/PRED_CUE';
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS/EXPECTATION/CUE_PRED_unbal_64hz';
+adam_MVPA_firstlevel(cfg);
+%% 02. Classify cue in TASK RELEVANCE session (no response was given) (DONE)
+cfg.class_spec{1} = cond_string(task_relevance,cue_face,non_tilted);
+cfg.class_spec{2} = cond_string(task_relevance,cue_house,non_tilted);
+cfg.class_spec{3} = cond_string(task_relevance,cue_letter,non_tilted);
+cfg.filenames = files_taskrelevance;
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS/TASKRELEVANCE/CAT_PRED_unbal_64hz';
 adam_MVPA_firstlevel(cfg);
