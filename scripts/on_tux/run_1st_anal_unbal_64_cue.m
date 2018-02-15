@@ -27,30 +27,30 @@ files_expectation = file_list_restrict(filenames,'Expectation');
 files_taskrelevance = file_list_restrict(filenames,'TaskRelevance');
 
 % session type
-prediction = [1:9 11:19];
+prediction     = [1:9 11:19];
 task_relevance = [21:29 31:39];
 
 % all cues
-cue_face = [1:3 11:13 21:23 31:33];
-cue_house = [4:6 14:16 24:26 34:36];
+cue_face   = [1:3 11:13 21:23 31:33];
+cue_house  = [4:6 14:16 24:26 34:36];
 cue_letter = [7:9 17:19 27:29 37:39];
 
 % all stimuli
-stim_face = [1 4 7 11 14 17 21 24 27 31 34 37];
-stim_house = [2 5 8 12 15 18 22 25 28 32 35 38];
+stim_face   = [1 4 7 11 14 17 21 24 27 31 34 37];
+stim_house  = [2 5 8 12 15 18 22 25 28 32 35 38];
 stim_letter = [3 6 9 13 16 19 23 26 29 33 36 39];
 
 % targets and non-targets in prediction session
-upright = 1:9;                        % non-target (do not press)
-upsidedown = 11:19;                   % target (press space bar)
-predicted = [1 5 9 11 15 19];         % targets and non-targets (no relation to button press)
-nonpredicted = [2:4 6:8 12:14 16:18]; % targets and non-targets (no relation to button press)
+upright      = 1:9;                     % non-target (do not press)
+upsidedown   = 11:19;                   % target (press space bar)
+predicted    = [1 5 9 11 15 19];        % targets and non-targets (no relation to button press)
+nonpredicted = [2:4 6:8 12:14 16:18];   % targets and non-targets (no relation to button press)
 
 % targets and non-targets in task relevance session
-category_incorrect = [22:24 26:28 32:34 36:38]; % non-target (do not press)
-non_tilted = 21:29;                             % non-target (do not press)
-category_correct = [21 25 29 31 35 39];         % targets and non-targets (only tilted ones are targets and require a button press)
-tilted = 31:39;                                 % targets and non-targets (only correct categories are targets and require a button press)
+category_incorrect      = [22:24 26:28 32:34 36:38];          % non-target (do not press)
+non_tilted              = 21:29;                              % non-target (do not press)
+category_correct        = [21 25 29 31 35 39];                % targets and non-targets (only tilted ones are targets and require a button press)
+tilted                  = 31:39;                              % targets and non-targets (only correct categories are targets and require a button press)
 category_correct_tilted = intersect(category_correct,tilted); % target (press space bar)
 
 %%
