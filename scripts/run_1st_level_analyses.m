@@ -60,10 +60,10 @@ cfg.filenames = filenames;
 cfg.class_type = 'linear';
 cfg.class_method = 'AUC';
 cfg.crossclass = 'yes';
-cfg.resample = 128;
+cfg.resample = 64;
 cfg.nfolds = 10;
 cfg.raw_or_tfr = 'raw';
-cfg.channels = 'ALL'; % ALL, OCCIP and OCCIPARIETAL
+cfg.channels = {'ALL' 'OCCIP' 'FRONTAL'}; % ALL, OCCIP and OCCIPARIETAL
 % cfg.clean_window = [.3 2.8];  % wait-interval + test item
 cfg.erp_baseline = [-2.25,-2]; % 250 ms of the fixation period
 
