@@ -1,79 +1,42 @@
 %% GAT matrices computation and ploting
 % GAT matrices computation and ploting to elaborate general results
 % presentation.
+% EVERY parameter defined in the cfg structure is going to feed the ADAM
+% toolbox directly. EVERY parameter defined in cfg_darks structure is going
+% to feed my wrapping functions.
 
-clear all
-clc
+%% CLEAN THE PLACE! 
+clear all;
+clc;
 
+%% Paths setting (these are not changed)
+cfg_darks.result_folder_path = '/media/nicolas/Midgard/EEG_uva_fhr/Predictive_EEG/RESULTS/MVPA_RESULTS/';       % dell15R path
+cfg_darks.plots_folder_path  = '/media/nicolas/Midgard/EEG_uva_fhr/Predictive_EEG/RESULTS/plots_gen_results/';  % dell15R path
 
-%% Paths setting
-result_folder_path = '/media/nicolas/Midgard/EEG_uva_fhr/Predictive_EEG/RESULTS/MVPA_RESULTS/'; % dell15R path
-plots_folder_path  = '/media/nicolas/Midgard/EEG_uva_fhr/Predictive_EEG/RESULTS/plots_gen_results/';        % dell15R path
-
-%% Session dealt with
-session = 'expectation';
+%% Session dealt with (expectation or taskrelevance)
+cfg_darks.session = 'expectation';
 
 %% 1. Expectation
 %% 1.1 CUE PREDICTION
 
 %% ... General settings for compute GAT matrix UNBALANCED
-cfg                   = [];                                                         % clear the config variable
-folder_name           = [result_folder_path  'EXPECTATION/CUE_PRED_unbal_64hz'];     % path to first level results 
-cfg.iterations        = 250;                                                        % reduce the number of iterations to save time
 
-channelpools          = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+% ADAM parameters
+cfg                     = [];            % clear the config variable
+cfg.iterations          = 250;           % reduce the number of iterations to save time
+cfg.mpcompcor_method    = 'uncorrected'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+cfg.referenceline       = -2000;
+
+% EVE parameters
+cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_unbal_64hz'];     % path to first level results 
+cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+cfg_darks.trial_time_label    = 'complete_trial';
+cfg_darks.frst_level_analysis = 'cue_prediction';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... Compute each channelpool (UNCORRECTED)
-% Correction method
-cfg.mpcompcor_method  = 'uncorrected';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+xxx = compute_plot_GAT(cfg, cfg_darks);
 
-for countChann = 1:numel(channelpools);
-    currChann  = channelpools{countChann};                          % channel pool
-    
-    cfg.channelpool = currChann;                    % set channel pool
-    exp.cue_prediction.unbalanced.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
-    
-end
-
-%% ... Ploting (UNCORRECTED)
-% cfg = [];                                    % clear the config variable
-cfg.referenceline = -2000;                     % ver/hor reference lines
-
-% actual ploting
-adam_plot_MVPA(cfg, [exp.cue_prediction.unbalanced.(cfg.mpcompcor_method).complete_trial.ALL ...
-                    exp.cue_prediction.unbalanced.(cfg.mpcompcor_method).complete_trial.FRONTAL ...
-                    exp.cue_prediction.unbalanced.(cfg.mpcompcor_method).complete_trial.OCCIP]);
-pause(2)
-close(gcf)
-
-%% ... Plot each channpool separately (UNCORRECTED)
-
-folder_to_plot = '/cue_prediction/unbalanced/complete_trial';
-str_to_loop = exp.cue_prediction.unbalanced.(cfg.mpcompcor_method).complete_trial;
-
-for countChann = 1:numel(channelpools);     % counter
-    currChann  = channelpools{countChann};  % current channel pool
-
-    adam_plot_MVPA(cfg, str_to_loop.(currChann));                                              % plot
-          title([strrep(str_to_loop.(currChann).condname, '_', ' ') ' ' currChann ' channs']); % change title (get rid of underscores)
-    
-    pause(1); % pause to allow graphic to resize                 
-    
-    mkdir([plots_folder_path session folder_to_plot]) % create dir if non-existent. if dir exists, it will warn
-    
-    saveas(gcf, [plots_folder_path session folder_to_plot '/cue_prediction_' currChann '_' cfg.mpcompcor_method 'unbalanced.png']); % save graph
-    
-    pause(1)
-    close(gcf); 
-    
-    if countChann == size(channelpools, 2); %detele var with struct
-        clear str_to_loop
-    end
-        
-end
-
-
-close(gcf); 
 %% ... General settings for compute GAT matrix BALANCED
 cfg                   = [];                                                         % clear the config variable
 folder_name           = [result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
