@@ -16,7 +16,65 @@ session = 'expectation';
 %% 1. Expectation
 %% 1.1 CUE PREDICTION
 
-%% ... General settings for compute GAT matrix
+%% ... General settings for compute GAT matrix UNBALANCED
+cfg                   = [];                                                         % clear the config variable
+folder_name           = [result_folder_path  'EXPECTATION/CUE_PRED_unbal_64hz'];     % path to first level results 
+cfg.iterations        = 250;                                                        % reduce the number of iterations to save time
+
+channelpools          = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+
+%% ... Compute each channelpool (UNCORRECTED)
+% Correction method
+cfg.mpcompcor_method  = 'uncorrected';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+
+for countChann = 1:numel(channelpools);
+    currChann  = channelpools{countChann};                          % channel pool
+    
+    cfg.channelpool = currChann;                    % set channel pool
+    exp.cue_prediction.unbalanced.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
+    
+end
+
+%% ... Ploting (UNCORRECTED)
+% cfg = [];                                    % clear the config variable
+cfg.referenceline = -2000;                     % ver/hor reference lines
+
+% actual ploting
+adam_plot_MVPA(cfg, [exp.cue_prediction.unbalanced.(cfg.mpcompcor_method).complete_trial.ALL ...
+                    exp.cue_prediction.unbalanced.(cfg.mpcompcor_method).complete_trial.FRONTAL ...
+                    exp.cue_prediction.unbalanced.(cfg.mpcompcor_method).complete_trial.OCCIP]);
+pause(2)
+close(gcf)
+
+%% ... Plot each channpool separately (UNCORRECTED)
+
+folder_to_plot = '/cue_prediction/unbalanced/complete_trial';
+str_to_loop = exp.cue_prediction.unbalanced.(cfg.mpcompcor_method).complete_trial;
+
+for countChann = 1:numel(channelpools);     % counter
+    currChann  = channelpools{countChann};  % current channel pool
+
+    adam_plot_MVPA(cfg, str_to_loop.(currChann));                                              % plot
+          title([strrep(str_to_loop.(currChann).condname, '_', ' ') ' ' currChann ' channs']); % change title (get rid of underscores)
+    
+    pause(1); % pause to allow graphic to resize                 
+    
+    mkdir([plots_folder_path session folder_to_plot]) % create dir if non-existent. if dir exists, it will warn
+    
+    saveas(gcf, [plots_folder_path session folder_to_plot '/cue_prediction_' currChann '_' cfg.mpcompcor_method 'unbalanced.png']); % save graph
+    
+    pause(1)
+    close(gcf); 
+    
+    if countChann == size(channelpools, 2); %detele var with struct
+        clear str_to_loop
+    end
+        
+end
+
+
+close(gcf); 
+%% ... General settings for compute GAT matrix BALANCED
 cfg                   = [];                                                         % clear the config variable
 folder_name           = [result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
 cfg.iterations        = 250;                                                        % reduce the number of iterations to save time
