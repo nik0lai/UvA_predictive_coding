@@ -400,7 +400,7 @@ adam_plot_MVPA(cfg, [rel_stim.uncorr.catincorr.ALL ...
 for countChann = 1:numel(channelpools);
     currChann = channelpools{countChann};                           % channel pool
 
-    adam_plot_MVPA(cfg, rel_stim.uncorr.catcorr.(currChann));
+    adam_plot_MVPA(cfg, rel_stim.uncorr.catincorr.(currChann));
     title([strrep(rel_stim.uncorr.catincorr.(currChann).condname, '_', ' ') ' ' currChann ' channs']);
     
     pause(1); % pause to allow the graphic to resize                 
