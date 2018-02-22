@@ -2,9 +2,8 @@
 % GAT matrices computation and ploting to elaborate general results
 % presentation.
 
-% Outline:
-% 1. Expectation session
-% 1.1 Cue prediction
+clear all
+clc
 
 
 %% Paths setting
@@ -19,7 +18,7 @@ session = 'expectation';
 
 %% ... General settings for compute GAT matrix
 cfg                   = [];                                                         % clear the config variable
-cfg.startdir          = [result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz/'];     % path to first level results 
+folder_name           = [result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
 cfg.iterations        = 250;                                                        % reduce the number of iterations to save time
 
 channelpools          = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
@@ -32,7 +31,7 @@ for countChann = 1:numel(channelpools);
     currChann  = channelpools{countChann};                          % channel pool
     
     cfg.channelpool = currChann;                    % set channel pool
-    exp.cue_prediction.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    exp.cue_prediction.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
     
 end
 
@@ -63,6 +62,8 @@ for countChann = 1:numel(channelpools);     % counter
     mkdir([plots_folder_path session folder_to_plot]) % create dir if non-existent. if dir exists, it will warn
     
     saveas(gcf, [plots_folder_path session folder_to_plot '/cue_prediction_' currChann '_' cfg.mpcompcor_method '.png']); % save graph
+    
+    pause(1)
     close(gcf); 
     
     if countChann == size(channelpools, 2); %detele var with struct
@@ -79,7 +80,7 @@ for countChann = 1:numel(channelpools);
     currChann  = channelpools{countChann};                          % channel pool
     
     cfg.channelpool = currChann;                    % set channel pool
-    exp.cue_prediction.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    exp.cue_prediction.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
     
 end
 
@@ -127,7 +128,7 @@ for countChann = 1:numel(channelpools);
     currChann  = channelpools{countChann};                          % channel pool
     
     cfg.channelpool = currChann;                    % set channel pool
-    exp.cue_prediction.(cfg.mpcompcor_method).stim_time.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    exp.cue_prediction.(cfg.mpcompcor_method).stim_time.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
     
 end
 
@@ -166,7 +167,7 @@ for countChann = 1:numel(channelpools);
     currChann  = channelpools{countChann};                          % channel pool
     
     cfg.channelpool = currChann;                    % set channel pool
-    exp.cue_prediction.(cfg.mpcompcor_method).cue_time.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    exp.cue_prediction.(cfg.mpcompcor_method).cue_time.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
     
 end
 
@@ -205,75 +206,75 @@ end
 %  item.
 
 
-cfg.timelim       = [];
-cfg.referenceline = [];
-
-% training limits, add new ones as new rows
-trainlims = [-1950 -1780; ...
-             -1950 -1300];
-
-% average training and display testing
-cfg.reduce_dims       = 'avtrain';
-
-% Correction method
-cfg.mpcompcor_method  = 'cluster_based';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-
-
-for countTTime      = 1:size(trainlims, 1);
-    cfg.trainlim    =  trainlims(countTTime ,:);
-    trainlim_lab = strrep(strrep(num2str(cfg.trainlim), ' ', '_'), '-', 'm');
-    
-    
-    for countChann = 1:numel(channelpools);
-        currChann  = channelpools{countChann};          % channel pool
-        
-        cfg.channelpool = currChann;                    % set channel pool
-        exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.(trainlim_lab).(currChann) = adam_compute_group_MVPA(cfg); % compute stats
-        
-    end
-    
-    if countTTime == size(trainlims,1)
-        cfg.trainlim = [];
-        cfg.reduce_dims = [];
-    end
-        
-end
+% % % cfg.timelim       = [];
+% % % cfg.referenceline = [];
+% % % 
+% % % % training limits, add new ones as new rows
+% % % trainlims = [-1950 -1780; ...
+% % %              -1950 -1300];
+% % % 
+% % % % average training and display testing
+% % % cfg.reduce_dims       = 'avtrain';
+% % % 
+% % % % Correction method
+% % % cfg.mpcompcor_method  = 'cluster_based';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+% % % 
+% % % 
+% % % for countTTime      = 1:size(trainlims, 1);
+% % %     cfg.trainlim    =  trainlims(countTTime ,:);
+% % %     trainlim_lab = strrep(strrep(num2str(cfg.trainlim), ' ', '_'), '-', 'm');
+% % %     
+% % %     
+% % %     for countChann = 1:numel(channelpools);
+% % %         currChann  = channelpools{countChann};          % channel pool
+% % %         
+% % %         cfg.channelpool = currChann;                    % set channel pool
+% % %         exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.(trainlim_lab).(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
+% % %         
+% % %     end
+% % %     
+% % %     if countTTime == size(trainlims,1)
+% % %         cfg.trainlim = [];
+% % %         cfg.reduce_dims = [];
+% % %     end
+% % %         
+% % % end
 
 %%
 
-folder_to_plot = '/cue_prediction/cue_trainlim/';
-
-str_to_loop = exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime;
-
-train_labs = fieldnames(str_to_loop);
-
-
-for countTTime      = 1:numel(train_labs);
- 
-    
-    for countChann = 1:numel(channelpools);
-        currChann  = channelpools{countChann};          % channel pool
-        
-        cfg.channelpool = currChann;                    % set channel pool
-              
-        adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.(train_labs{countTTime}).(currChann))
-        pause(2); % pause to allow the graphic to resize           
-        
-        mkdir([plots_folder_path session folder_to_plot]); % create dir if non-existent. if dir exists, it will warn
-        saveas(gcf, [plots_folder_path session folder_to_plot '/cue_pred_' trainlim_lab '_' cfg.mpcompcor_method '.png']);
-        close(gcf);
-    
-    
-    end
-    
-    %%CLEANING%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    if countTTime == size(trainlims,1);
-        cfg.trainlim = [];
-        cfg.reduce_dims = [];
-    end
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        
-end
+% % % folder_to_plot = '/cue_prediction/cue_trainlim/';
+% % % 
+% % % str_to_loop = exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime;
+% % % 
+% % % train_labs = fieldnames(str_to_loop);
+% % % 
+% % % 
+% % % for countTTime      = 1:numel(train_labs);
+% % %  
+% % %     
+% % %     for countChann = 1:numel(channelpools);
+% % %         currChann  = channelpools{countChann};          % channel pool
+% % %         
+% % %         cfg.channelpool = currChann;                    % set channel pool
+% % %               
+% % %         adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.(train_labs{countTTime}).(currChann))
+% % %         pause(2); % pause to allow the graphic to resize           
+% % %         
+% % %         mkdir([plots_folder_path session folder_to_plot]); % create dir if non-existent. if dir exists, it will warn
+% % %         saveas(gcf, [plots_folder_path session folder_to_plot '/cue_pred_' trainlim_lab '_' cfg.mpcompcor_method '.png']);
+% % %         close(gcf);
+% % %     
+% % %     
+% % %     end
+% % %     
+% % %     %%CLEANING%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % %     if countTTime == size(trainlims,1);
+% % %         cfg.trainlim = [];
+% % %         cfg.reduce_dims = [];
+% % %     end
+% % %     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % %         
+% % % end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 %% BUG
 % % % cfg = rmfield(cfg, 'trainlim')
@@ -289,7 +290,7 @@ end
 
 %%
 
-% % % short_train                  = adam_compute_group_MVPA(cfg); % compute stats
+% % % short_train                  = adam_compute_group_MVPA(cfg, folder_name); % compute stats
 % % % adam_plot_MVPA(cfg, short_train);
 % % %     pause(1); % pause to allow the graphic to resize                 
 % % %     saveas(gcf, [plots_folder_path 'expectation/cue_trainlim/cue_pred_-1950to-1780_corr.png']);
@@ -297,7 +298,7 @@ end
 % % % 
 % % % cfg.trainlim           = [-1950 -1300];
 % % % cfg.channelpool        = 'ALL';
-% % % large_train                   = adam_compute_group_MVPA(cfg); % compute stats
+% % % large_train                   = adam_compute_group_MVPA(cfg, folder_name); % compute stats
 % % % adam_plot_MVPA(cfg, large_train);
 % % %     pause(1); % pause to allow the graphic to resize                 
 % % %     saveas(gcf, [plots_folder_path 'expectation/cue_trainlim/cue_pred_-1950to-1300_corr.png']);
@@ -307,7 +308,7 @@ end
 %% 1.2 Predicted stim
 %% General settings for compute GAT matrix
 cfg                   = [];                                                         % clear the config variable
-cfg.startdir          = [result_folder_path  'EXPECTATION/PRED_STIM_bal_64hz/'];    % path to first level results 
+folder_name          = [result_folder_path  'EXPECTATION/PRED_STIM_bal_64hz'];    % path to first level results 
 cfg.iterations        = 250;                                                        % reduce the number of iterations to save time
 
 channelpools          = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
@@ -320,7 +321,7 @@ for countChann = 1:numel(channelpools);
     currChann  = channelpools{countChann};                          % channel pool
     
     cfg.channelpool = currChann;                    % set channel pool
-    exp.corr_pred_stim.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    exp.corr_pred_stim.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
     
 end
 
@@ -367,7 +368,7 @@ for countChann = 1:numel(channelpools);
     currChann  = channelpools{countChann};                          % channel pool
     
     cfg.channelpool = currChann;                    % set channel pool
-    exp.corr_pred_stim.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    exp.corr_pred_stim.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
     
 end
 
@@ -415,7 +416,7 @@ for countChann = 1:numel(channelpools);
     currChann  = channelpools{countChann};                          % channel pool
     
     cfg.channelpool = currChann;                    % set channel pool
-    exp.corr_pred_stim.(cfg.mpcompcor_method).stim_time.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    exp.corr_pred_stim.(cfg.mpcompcor_method).stim_time.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
     
 end
 
@@ -454,7 +455,7 @@ for countChann = 1:numel(channelpools);
     currChann  = channelpools{countChann};                          % channel pool
     
     cfg.channelpool = currChann;                    % set channel pool
-    exp.corr_pred_stim.(cfg.mpcompcor_method).cue_time.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    exp.corr_pred_stim.(cfg.mpcompcor_method).cue_time.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
     
 end
 
@@ -486,7 +487,7 @@ end
 %% 1.2 Unpredicted stim
 %% General settings for compute GAT matrix
 cfg                   = [];                                                         % clear the config variable
-cfg.startdir          = [result_folder_path  'EXPECTATION/UNPRED_STIM_bal_64hz/'];    % path to first level results 
+folder_name          = [result_folder_path  'EXPECTATION/UNPRED_STIM_bal_64hz'];    % path to first level results 
 cfg.iterations        = 250;                                                        % reduce the number of iterations to save time
 
 channelpools          = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
@@ -499,7 +500,7 @@ for countChann = 1:numel(channelpools);
     currChann  = channelpools{countChann};                          % channel pool
     
     cfg.channelpool = currChann;                    % set channel pool
-    exp.incorr_pred_stim.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    exp.incorr_pred_stim.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
     
 end
 
@@ -546,7 +547,7 @@ for countChann = 1:numel(channelpools);
     currChann  = channelpools{countChann};                          % channel pool
     
     cfg.channelpool = currChann;                    % set channel pool
-    exp.incorr_pred_stim.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    exp.incorr_pred_stim.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
     
 end
 
@@ -594,7 +595,7 @@ for countChann = 1:numel(channelpools);
     currChann  = channelpools{countChann};                          % channel pool
     
     cfg.channelpool = currChann;                    % set channel pool
-    exp.incorr_pred_stim.(cfg.mpcompcor_method).stim_time.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    exp.incorr_pred_stim.(cfg.mpcompcor_method).stim_time.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
     
 end
 
@@ -633,7 +634,7 @@ for countChann = 1:numel(channelpools);
     currChann  = channelpools{countChann};                          % channel pool
     
     cfg.channelpool = currChann;                    % set channel pool
-    exp.incorr_pred_stim.(cfg.mpcompcor_method).cue_time.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    exp.incorr_pred_stim.(cfg.mpcompcor_method).cue_time.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
     
 end
 
