@@ -276,32 +276,33 @@ for countTTime      = 1:numel(train_labs);
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 %% BUG
-cfg = rmfield(cfg, 'trainlim')
-
-adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1300.ALL)
-adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1300.FRONTAL)
-adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1300.OCCIP)
-
-adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1780.ALL)
-adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1780.FRONTAL)
-adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1780.OCCIP)
+% % % cfg = rmfield(cfg, 'trainlim')
+% % % 
+% % % adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1300.ALL)
+% % % adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1300.FRONTAL)
+% % % adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1300.OCCIP)
+% % % 
+% % % adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1780.ALL)
+% % % adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1780.FRONTAL)
+% % % adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1780.OCCIP)
 
 
 %%
 
-short_train                  = adam_compute_group_MVPA(cfg); % compute stats
-adam_plot_MVPA(cfg, short_train);
-    pause(1); % pause to allow the graphic to resize                 
-    saveas(gcf, [plots_folder_path 'expectation/cue_trainlim/cue_pred_-1950to-1780_corr.png']);
-    close(gcf);
+% % % short_train                  = adam_compute_group_MVPA(cfg); % compute stats
+% % % adam_plot_MVPA(cfg, short_train);
+% % %     pause(1); % pause to allow the graphic to resize                 
+% % %     saveas(gcf, [plots_folder_path 'expectation/cue_trainlim/cue_pred_-1950to-1780_corr.png']);
+% % %     close(gcf);
+% % % 
+% % % cfg.trainlim           = [-1950 -1300];
+% % % cfg.channelpool        = 'ALL';
+% % % large_train                   = adam_compute_group_MVPA(cfg); % compute stats
+% % % adam_plot_MVPA(cfg, large_train);
+% % %     pause(1); % pause to allow the graphic to resize                 
+% % %     saveas(gcf, [plots_folder_path 'expectation/cue_trainlim/cue_pred_-1950to-1300_corr.png']);
+% % %     close(gcf);
 
-cfg.trainlim           = [-1950 -1300];
-cfg.channelpool        = 'ALL';
-large_train                   = adam_compute_group_MVPA(cfg); % compute stats
-adam_plot_MVPA(cfg, large_train);
-    pause(1); % pause to allow the graphic to resize                 
-    saveas(gcf, [plots_folder_path 'expectation/cue_trainlim/cue_pred_-1950to-1300_corr.png']);
-    close(gcf);
 
 %% 1.2 Predicted stim
 %% General settings for compute GAT matrix
@@ -309,144 +310,190 @@ cfg                   = [];                                                     
 cfg.startdir          = [result_folder_path  'EXPECTATION/PRED_STIM_bal_64hz/'];    % path to first level results 
 cfg.iterations        = 250;                                                        % reduce the number of iterations to save time
 
-%% Uncorrected for mult comp
+channelpools          = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+
+%% ... Compute each channelpool (UNCORRECTED)
+% Correction method
 cfg.mpcompcor_method  = 'uncorrected';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 
-% Compute each channelpool
-channelpools = {'ALL', 'FRONTAL', 'OCCIP'};
-
 for countChann = 1:numel(channelpools);
-    currChann = channelpools{countChann};                           % channel pool
+    currChann  = channelpools{countChann};                          % channel pool
     
-    cfg.channelpool = currChann;                                    % set channel pool
-    exp_stim.uncorrected.predicted.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    cfg.channelpool = currChann;                    % set channel pool
+    exp.corr_pred_stim.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
     
 end
 
-%% Ploting
+%% ... Ploting (UNCORRECTED)
 % cfg = [];                                    % clear the config variable
-cfg.referenceline = 0;                     % ver/hor reference lines
+cfg.referenceline = -2000;                     % ver/hor reference lines
 
-% all three channelpools togheter (ALL, FRONTAL, OCCIP; in that order)
-adam_plot_MVPA(cfg, [exp_stim.uncorrected.predicted.ALL ...
-                     exp_stim.uncorrected.predicted.FRONTAL...
-                     exp_stim.uncorrected.predicted.OCCIP]);
+% actual ploting
+adam_plot_MVPA(cfg, [exp.corr_pred_stim.(cfg.mpcompcor_method).complete_trial.ALL ...
+                    exp.corr_pred_stim.(cfg.mpcompcor_method).complete_trial.FRONTAL ...
+                    exp.corr_pred_stim.(cfg.mpcompcor_method).complete_trial.OCCIP]);
+pause(2)
+close(gcf)
 
-%% Plot separately to save as png (Convert to loop)
+%% ... Plot each channpool separately (UNCORRECTED)
+
+folder_to_plot = '/corr_pred_stim/complete_trial';
+str_to_loop = exp.corr_pred_stim.(cfg.mpcompcor_method).complete_trial;
+
+for countChann = 1:numel(channelpools);     % counter
+    currChann  = channelpools{countChann};  % current channel pool
+
+    adam_plot_MVPA(cfg, str_to_loop.(currChann));                                              % plot
+          title([strrep(str_to_loop.(currChann).condname, '_', ' ') ' ' currChann ' channs']); % change title (get rid of underscores)
+    
+    pause(1); % pause to allow graphic to resize                 
+    
+    mkdir([plots_folder_path session folder_to_plot]) % create dir if non-existent. if dir exists, it will warn
+    
+    saveas(gcf, [plots_folder_path session folder_to_plot '/corr_pred_stim_' currChann '_' cfg.mpcompcor_method '.png']); % save graph
+    close(gcf); 
+    
+    if countChann == size(channelpools, 2); %detele var with struct
+        clear str_to_loop
+    end
+        
+end
+
+%% ... Compute each channelpool (CLUSTER_BASED)
+% Correction method
+cfg.mpcompcor_method  = 'cluster_based';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 
 for countChann = 1:numel(channelpools);
-    currChann = channelpools{countChann};                           % channel pool
-
-    adam_plot_MVPA(cfg, exp_stim.uncorrected.predicted.(currChann));
-    title([strrep(exp_stim.uncorrected.predicted.(currChann).condname, '_', ' ') ' ' currChann ' channs']);
+    currChann  = channelpools{countChann};                          % channel pool
     
-    pause(1); % pause to allow the graphic to resize                 
-    saveas(gcf, [plots_folder_path 'expectation/pred_stim/pred_stim_' currChann '_uncorr.png']);
-    close(gcf);
+    cfg.channelpool = currChann;                    % set channel pool
+    exp.corr_pred_stim.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
     
 end
 
-%% Cluster-based correction for mult comp
-cfg.mpcompcor_method  = 'cluster_based';                                        % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+%% ... Ploting (CLUSTER_BASED)
+cfg.referenceline = -2000;                     % ver/hor reference lines
 
-% Compute each channelpool
-channelpools = {'ALL', 'FRONTAL', 'OCCIP'};
+% actual ploting
+adam_plot_MVPA(cfg, [exp.corr_pred_stim.(cfg.mpcompcor_method).complete_trial.ALL ...
+                    exp.corr_pred_stim.(cfg.mpcompcor_method).complete_trial.FRONTAL ...
+                    exp.corr_pred_stim.(cfg.mpcompcor_method).complete_trial.OCCIP]);
+pause(2)
+close(gcf)
+
+%% ... Plot each channpool separately (CLUSTER_BASED)
+
+folder_to_plot = '/corr_pred_stim/complete_trial/';
+str_to_loop = exp.corr_pred_stim.(cfg.mpcompcor_method).complete_trial;
+
+for countChann = 1:numel(channelpools);     % counter
+    currChann  = channelpools{countChann};  % current channel pool
+
+    adam_plot_MVPA(cfg, str_to_loop.(currChann));                                              % plot
+          title([strrep(str_to_loop.(currChann).condname, '_', ' ') ' ' currChann ' channs']); % change title (get rid of underscores)
+    
+    pause(1); % pause to allow graphic to resize                 
+    
+    mkdir([plots_folder_path session folder_to_plot]) % create dir if non-existent. if dir exists, it will warn
+    
+    saveas(gcf, [plots_folder_path session folder_to_plot '/corr_pred_stim_' currChann '_' cfg.mpcompcor_method '.png']); % save graph
+    close(gcf); 
+    
+    if countChann == size(channelpools, 2); %detele var with struct
+        clear str_to_loop
+    end
+        
+end
+
+%% ... Compute GAT for STIM time window
+cfg.timelim           = [0 1000]; % constrain train/test time to stim time-window
+
+% Correction method
+cfg.mpcompcor_method  = 'cluster_based';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 
 for countChann = 1:numel(channelpools);
-    currChann = channelpools{countChann};                           % channel pool
+    currChann  = channelpools{countChann};                          % channel pool
     
-    cfg.channelpool = currChann;                                    % set channel pool
-    exp_stim.corr.predicted.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    cfg.channelpool = currChann;                    % set channel pool
+    exp.corr_pred_stim.(cfg.mpcompcor_method).stim_time.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
     
 end
 
-%% Ploting
-% all three channelpools togheter (ALL, FRONTAL, OCCIP; in that order)
-adam_plot_MVPA(cfg, [exp_stim.corr.predicted.ALL...
-                     exp_stim.corr.predicted.FRONTAL...
-                     exp_stim.corr.predicted.OCCIP])
+%% ... Plot each channpool separately (CLUSTER_BASED)
+cfg.referenceline = [];                     % ver/hor reference lines
 
-%% Plot separately to save as png
-for countChann = 1:numel(channelpools);
-    currChann = channelpools{countChann};                           % channel pool
+folder_to_plot = '/corr_pred_stim/stim_time/';
+str_to_loop = exp.corr_pred_stim.(cfg.mpcompcor_method).stim_time;
 
-    adam_plot_MVPA(cfg, exp_stim.corr.predicted.(currChann));
-    title([strrep(exp_stim.corr.predicted.(currChann).condname, '_', ' ') ' ' currChann ' channs']);
+for countChann = 1:numel(channelpools);     % counter
+    currChann  = channelpools{countChann};  % current channel pool
+
+    adam_plot_MVPA(cfg, str_to_loop.(currChann));                                              % plot
+          title([strrep(str_to_loop.(currChann).condname, '_', ' ') ' ' currChann ' channs']); % change title (get rid of underscores)
     
-    pause(1); % pause to allow the graphic to resize                 
-    saveas(gcf, [plots_folder_path 'expectation/pred_stim/pred_stim_' currChann '_corr.png']);
-    close(gcf);
+    pause(1); % pause to allow graphic to resize                 
+    
+    mkdir([plots_folder_path session folder_to_plot]) % create dir if non-existent. if dir exists, it will warn
+    
+    saveas(gcf, [plots_folder_path session folder_to_plot '/corr_pred_stim_' currChann '_' cfg.mpcompcor_method '.png']); % save graph
+    close(gcf); 
+    
+    if countChann == size(channelpools, 2); %detele var with struct
+        clear str_to_loop
+    end
+        
+end
+
+%% ... Compute GAT for CUE time window
+cfg.timelim           = [-1950 -500]; % constrain train/test time to stim time-window
+
+% Correction method
+cfg.mpcompcor_method  = 'cluster_based';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+
+for countChann = 1:numel(channelpools);
+    currChann  = channelpools{countChann};                          % channel pool
+    
+    cfg.channelpool = currChann;                    % set channel pool
+    exp.corr_pred_stim.(cfg.mpcompcor_method).cue_time.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
     
 end
 
-%% Compute GAT for STIM time window
+%% ... Plot each channpool separately (CLUSTER_BASED)
+cfg.referenceline = [];                     % ver/hor reference lines
 
-cfg.timelim           = [0 1000];
-cfg.mpcompcor_method  = 'cluster_based';                                        % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+folder_to_plot = '/corr_pred_stim/cue_time/';
+str_to_loop = exp.corr_pred_stim.(cfg.mpcompcor_method).cue_time;
 
-% Compute each channelpool
-channelpools = {'ALL', 'FRONTAL', 'OCCIP'};
+for countChann = 1:numel(channelpools);     % counter
+    currChann  = channelpools{countChann};  % current channel pool
 
-for countChann = 1:numel(channelpools);
-    currChann = channelpools{countChann};                           % channel pool
+    adam_plot_MVPA(cfg, str_to_loop.(currChann));                                              % plot
+          title([strrep(str_to_loop.(currChann).condname, '_', ' ') ' ' currChann ' channs']); % change title (get rid of underscores)
     
-    cfg.channelpool = currChann;                                    % set channel pool
-    exp_stim.corr.stim_timelim.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
+    pause(1); % pause to allow graphic to resize                 
     
+    mkdir([plots_folder_path session folder_to_plot]) % create dir if non-existent. if dir exists, it will warn
+    
+    saveas(gcf, [plots_folder_path session folder_to_plot '/corr_pred_stim_' currChann '_' cfg.mpcompcor_method '.png']); % save graph
+    close(gcf); 
+    
+    if countChann == size(channelpools, 2); %detele var with struct
+        clear str_to_loop
+    end
+        
 end
 
-%% Plot separately to save as png
-cfg = [];
-for countChann = 1:numel(channelpools);
-    currChann = channelpools{countChann};                           % channel pool
 
-    adam_plot_MVPA(cfg, exp_stim.corr.stim_timelim.(currChann));
-%   title([strrep(exp.cue_prediction.corr.cue_timelim.(currChann).condname, '_', ' ') ' ' currChann ' channs']);
-    title('');
-%     ylabel('')
-%     xlabel('')
-%     colorbar('off')
-    
-    pause(1); % pause to allow the graphic to resize                 
-    saveas(gcf, [plots_folder_path 'expectation/pred_stim_timelim/pred_stim_' currChann '_corr.png']);
-    close(gcf);
-    
-end
 
-%% Compute GAT for cue time window
 
-cfg.timelim           = [-1950 -500];
-cfg.mpcompcor_method  = 'cluster_based';                                        % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 
-% Compute each channelpool
-channelpools = {'ALL', 'FRONTAL', 'OCCIP'};
 
-for countChann = 1:numel(channelpools);
-    currChann = channelpools{countChann};                           % channel pool
-    
-    cfg.channelpool = currChann;                                    % set channel pool
-    exp_stim.corr.pred_stim_cuetimelim.(currChann) = adam_compute_group_MVPA(cfg); % compute stats
-    
-end
+%%%%%%%%%%%%%%%%%%%5
 
-%% Plot separately to save as png
-cfg = [];
-for countChann = 1:numel(channelpools);
-    currChann = channelpools{countChann};                           % channel pool
 
-    adam_plot_MVPA(cfg, exp_stim.corr.pred_stim_cuetimelim.(currChann));
-%   title([strrep(exp.cue_prediction.corr.cue_timelim.(currChann).condname, '_', ' ') ' ' currChann ' channs']);
-    title('');
-%     ylabel('')
-%     xlabel('')
-%     colorbar('off')
-    
-    pause(1); % pause to allow the graphic to resize                 
-    saveas(gcf, [plots_folder_path 'expectation/pred_stim_cuetimelim/pred_stim_' currChann '_corr.png']);
-    close(gcf);
-    
-end
-   
+
+
+
 
 %% 1.2 UNpredicted stim
 %% General settings for compute GAT matrix
