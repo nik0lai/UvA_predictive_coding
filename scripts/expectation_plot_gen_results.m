@@ -14,7 +14,7 @@ plots_folder_path  = '/media/nicolas/Midgard/EEG_uva_fhr/Predictive_EEG/RESULTS/
 session = 'expectation';
 
 %% 1. Expectation
-%% 1.1 Cue prediction
+%% 1.1 CUE PREDICTION
 
 %% ... General settings for compute GAT matrix
 cfg                   = [];                                                         % clear the config variable
@@ -72,6 +72,8 @@ for countChann = 1:numel(channelpools);     % counter
         
 end
 
+
+close(gcf); 
 %% ... Compute each channelpool (CLUSTER_BASED)
 % Correction method
 cfg.mpcompcor_method  = 'cluster_based';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
@@ -118,6 +120,8 @@ for countChann = 1:numel(channelpools);     % counter
         
 end
 
+
+close(gcf); 
 %% ... Compute GAT for STIM time window
 cfg.timelim           = [0 1000]; % constrain train/test time to stim time-window
 
@@ -157,6 +161,8 @@ for countChann = 1:numel(channelpools);     % counter
         
 end
 
+
+close(gcf); 
 %% ... Compute GAT for CUE time window
 cfg.timelim           = [-1950 -500]; % constrain train/test time to stim time-window
 
@@ -197,6 +203,7 @@ for countChann = 1:numel(channelpools);     % counter
 end
 
 
+close(gcf); 
 %% ... Train on constrained time windows (convert to loop so it can be feed with many time-windows
 %  using this two different time-window to train the classifier show the
 %  difference in what can be decoded by the classifier. The first 170 ms
@@ -305,7 +312,7 @@ end
 % % %     close(gcf);
 
 
-%% 1.2 Predicted stim
+%% 1.2 CORRECTLY PREDICTED STIM
 %% General settings for compute GAT matrix
 cfg                   = [];                                                         % clear the config variable
 folder_name          = [result_folder_path  'EXPECTATION/PRED_STIM_bal_64hz'];    % path to first level results 
@@ -360,6 +367,8 @@ for countChann = 1:numel(channelpools);     % counter
         
 end
 
+
+close(gcf); 
 %% ... Compute each channelpool (CLUSTER_BASED)
 % Correction method
 cfg.mpcompcor_method  = 'cluster_based';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
@@ -406,6 +415,8 @@ for countChann = 1:numel(channelpools);     % counter
         
 end
 
+
+close(gcf); 
 %% ... Compute GAT for STIM time window
 cfg.timelim           = [0 1000]; % constrain train/test time to stim time-window
 
@@ -445,6 +456,8 @@ for countChann = 1:numel(channelpools);     % counter
         
 end
 
+
+close(gcf); 
 %% ... Compute GAT for CUE time window
 cfg.timelim           = [-1950 -500]; % constrain train/test time to stim time-window
 
@@ -484,7 +497,9 @@ for countChann = 1:numel(channelpools);     % counter
         
 end
 
-%% 1.2 Unpredicted stim
+
+close(gcf); 
+%% 1.2 INCORRECTLY PREDICTED STIM
 %% General settings for compute GAT matrix
 cfg                   = [];                                                         % clear the config variable
 folder_name          = [result_folder_path  'EXPECTATION/UNPRED_STIM_bal_64hz'];    % path to first level results 
@@ -539,6 +554,8 @@ for countChann = 1:numel(channelpools);     % counter
         
 end
 
+
+close(gcf);
 %% ... Compute each channelpool (CLUSTER_BASED)
 % Correction method
 cfg.mpcompcor_method  = 'cluster_based';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
@@ -585,6 +602,8 @@ for countChann = 1:numel(channelpools);     % counter
         
 end
 
+
+close(gcf); 
 %% ... Compute GAT for STIM time window
 cfg.timelim           = [0 1000]; % constrain train/test time to stim time-window
 
@@ -624,6 +643,8 @@ for countChann = 1:numel(channelpools);     % counter
         
 end
 
+
+close(gcf); 
 %% ... Compute GAT for CUE time window
 cfg.timelim           = [-1950 -500]; % constrain train/test time to stim time-window
 
@@ -662,3 +683,6 @@ for countChann = 1:numel(channelpools);     % counter
     end
         
 end
+
+
+close(gcf); 
