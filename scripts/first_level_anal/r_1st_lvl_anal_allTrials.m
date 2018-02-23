@@ -55,7 +55,7 @@ category_correct_tilted = intersect(category_correct,tilted); % target (press sp
 
 %%
 cfg = [];
-cfg.datadir            = '/home/nicolas1/Documents/predictive_eeg/EEGLAB_DATA/highpassed_.1'; % put the actual source directory here
+cfg.datadir            = '/home/nicolas1/Documents/predictive_eeg/EEGLAB_DATA/highpass_.1'; % put the actual source directory here
 cfg.filenames          = filenames;
 cfg.class_type         = 'linear';
 cfg.class_method       = 'AUC';
@@ -71,7 +71,7 @@ cfg.class_spec{1} = cond_string(prediction,cue_face);
 cfg.class_spec{2} = cond_string(prediction,cue_house);
 cfg.class_spec{3} = cond_string(prediction,cue_letter);
 cfg.filenames = files_expectation;
-cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_EXP/CUE_PRED_allTrials';
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS/EXPECTATION/CUE_PRED_64hz_allTrials';
 adam_MVPA_firstlevel(cfg);
 
 %% 02. Classify cue in RELEVANCE TASK condition (no response was given) (re-DO)
@@ -79,6 +79,6 @@ cfg.class_spec{1} = cond_string(task_relevance,cue_face);
 cfg.class_spec{2} = cond_string(task_relevance,cue_house);
 cfg.class_spec{3} = cond_string(task_relevance,cue_letter);
 cfg.filenames = files_taskrelevance;
-cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_REL/CUE_CAT_allTrials';
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS/TASKRELEVANCE/CUE_CAT_64hz_allTrials';
 adam_MVPA_firstlevel(cfg);
 

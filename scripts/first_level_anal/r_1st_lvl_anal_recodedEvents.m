@@ -71,7 +71,7 @@ cfg.class_spec{1} = cond_string(prediction,stim_face,upright,predicted);
 cfg.class_spec{2} = cond_string(prediction,stim_house,upright,predicted);
 cfg.class_spec{3} = cond_string(prediction,stim_letter,upright,predicted);
 cfg.filenames = files_expectation;
-cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_EXP/PRED_STIM_recodedEvents';
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS/EXPECTATION/PRED_STIM_64hz_recodedEvents';
 adam_MVPA_firstlevel(cfg);
 
 %% 02. Classify category-incorrect stim in RELEVANCE session 
@@ -79,5 +79,5 @@ cfg.class_spec{1} = cond_string(task_relevance,stim_face,non_tilted, category_in
 cfg.class_spec{2} = cond_string(task_relevance,stim_house,non_tilted, category_incorrect);
 cfg.class_spec{3} = cond_string(task_relevance,stim_letter,non_tilted, category_incorrect);
 cfg.filenames = files_taskrelevance;
-cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_REL/CATINCORR_STIM_recodedEvents';
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS/TASKRELEVANCE/CATINCORR_STIM_64hz_recodedEvents';
 adam_MVPA_firstlevel(cfg);

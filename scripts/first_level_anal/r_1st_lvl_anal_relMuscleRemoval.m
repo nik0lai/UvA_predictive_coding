@@ -55,7 +55,7 @@ category_correct_tilted = intersect(category_correct,tilted); % target (press sp
 
 %%
 cfg = [];
-cfg.datadir            = '/home/nicolas1/Documents/predictive_eeg/EEGLAB_DATA/highpassed_.1'; % put the actual source directory here
+cfg.datadir            = '/home/nicolas1/Documents/predictive_eeg/EEGLAB_DATA/highpass_.1'; % put the actual source directory here
 cfg.filenames          = filenames;
 cfg.class_type         = 'linear';
 cfg.class_method       = 'AUC';
@@ -72,20 +72,20 @@ cfg.class_spec{1} = cond_string(task_relevance,cue_face,non_tilted);
 cfg.class_spec{2} = cond_string(task_relevance,cue_house,non_tilted);
 cfg.class_spec{3} = cond_string(task_relevance,cue_letter,non_tilted);
 cfg.filenames = files_taskrelevance;
-cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_REL/CUE_CAT_muscleRem';
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS/TASKRELEVANCE/CUE_CAT_64hz_muscleRem';
 adam_MVPA_firstlevel(cfg);
 %% 02. Classify category-correct stim in RELEVANCE cond (being done)
 cfg.class_spec{1} = cond_string(task_relevance,stim_face,non_tilted, category_correct);
 cfg.class_spec{2} = cond_string(task_relevance,stim_house,non_tilted, category_correct);
 cfg.class_spec{3} = cond_string(task_relevance,stim_letter,non_tilted, category_correct);
 cfg.filenames = files_taskrelevance;
-cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_REL/CATCORR_STIM_muscleRem';
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS/TASKRELEVANCE/CATCORR_STIM_64hz_muscleRem';
 adam_MVPA_firstlevel(cfg);
 %% 03. Classify category-incorrect stim in RELEVANCE cond (being done)
 cfg.class_spec{1} = cond_string(task_relevance,stim_face,non_tilted, category_incorrect);
 cfg.class_spec{2} = cond_string(task_relevance,stim_house,non_tilted, category_incorrect);
 cfg.class_spec{3} = cond_string(task_relevance,stim_letter,non_tilted, category_incorrect);
 cfg.filenames = files_taskrelevance;
-cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_REL/CATINCORR_STIM_muscleRem';
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS/TASKRELEVANCE/CATINCORR_STIM_64hz_muscleRem';
 adam_MVPA_firstlevel(cfg);
 
