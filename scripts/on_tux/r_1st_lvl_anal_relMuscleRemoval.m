@@ -64,22 +64,28 @@ cfg.resample           = 64;
 cfg.nfolds             = 10;
 cfg.raw_or_tfr         = 'raw';
 cfg.channels           = {'ALL' 'OCCIP' 'FRONTAL'}; % ALL, OCCIP and OCCIPARIETAL
-% cfg.clean_window       = [.3 2.8];  % wait-interval + test item
+cfg.clean_window       = [-1 .5];  % wait-interval + test item
 cfg.erp_baseline       = [-2.25,-2]; % 250 ms of the fixation period
 
-%% 01. Classify cue in EXPECTATION condition (no response was given) (DONE)
-cfg.class_spec{1} = cond_string(prediction,cue_face);
-cfg.class_spec{2} = cond_string(prediction,cue_house);
-cfg.class_spec{3} = cond_string(prediction,cue_letter);
-cfg.filenames = files_expectation;
-cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_EXP/CUE_PRED_allTrials';
-adam_MVPA_firstlevel(cfg);
-
-%% 02. Classify cue in RELEVANCE TASK condition (no response was given) (re-DO)
-cfg.class_spec{1} = cond_string(task_relevance,cue_face);
-cfg.class_spec{2} = cond_string(task_relevance,cue_house);
-cfg.class_spec{3} = cond_string(task_relevance,cue_letter);
+%% 01. Classify cue in RELEVANCE TASK condition (no response was given) (re-DO)
+cfg.class_spec{1} = cond_string(task_relevance,cue_face,non_tilted);
+cfg.class_spec{2} = cond_string(task_relevance,cue_house,non_tilted);
+cfg.class_spec{3} = cond_string(task_relevance,cue_letter,non_tilted);
 cfg.filenames = files_taskrelevance;
-cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_REL/CUE_CAT_allTrials';
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_REL/CUE_CAT_muscleRem';
+adam_MVPA_firstlevel(cfg);
+%% 02. Classify category-correct stim in RELEVANCE cond (being done)
+cfg.class_spec{1} = cond_string(task_relevance,stim_face,non_tilted, category_correct);
+cfg.class_spec{2} = cond_string(task_relevance,stim_house,non_tilted, category_correct);
+cfg.class_spec{3} = cond_string(task_relevance,stim_letter,non_tilted, category_correct);
+cfg.filenames = files_taskrelevance;
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_REL/CATCORR_STIM_muscleRem';
+adam_MVPA_firstlevel(cfg);
+%% 03. Classify category-incorrect stim in RELEVANCE cond (being done)
+cfg.class_spec{1} = cond_string(task_relevance,stim_face,non_tilted, category_incorrect);
+cfg.class_spec{2} = cond_string(task_relevance,stim_house,non_tilted, category_incorrect);
+cfg.class_spec{3} = cond_string(task_relevance,stim_letter,non_tilted, category_incorrect);
+cfg.filenames = files_taskrelevance;
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS_REL/CATINCORR_STIM_muscleRem';
 adam_MVPA_firstlevel(cfg);
 
