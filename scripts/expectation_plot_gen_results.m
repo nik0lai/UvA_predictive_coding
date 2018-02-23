@@ -6,12 +6,14 @@
 % to feed my wrapping functions.
 
 %% CLEAN THE PLACE! 
-clear all;
+clear;
 clc;
 
 %% Paths setting (these are not changed)
-cfg_darks.result_folder_path = '/media/nicolas/Midgard/EEG_uva_fhr/Predictive_EEG/RESULTS/MVPA_RESULTS/';       % dell15R path
-cfg_darks.plots_folder_path  = '/media/nicolas/Midgard/EEG_uva_fhr/Predictive_EEG/RESULTS/plots_gen_results/';  % dell15R path
+main_path = '/media/nicolas/Midgard/EEG_uva_fhr/Predictive_EEG/';
+
+cfg_darks.result_folder_path = [main_path 'RESULTS/MVPA_RESULTS/'];       % dell15R path
+cfg_darks.plots_folder_path  = [main_path 'RESULTS/plots_gen_results/'];  % dell15R path
 
 %% Session dealt with (expectation or taskrelevance)
 cfg_darks.session = 'expectation';
