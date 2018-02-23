@@ -80,5 +80,5 @@ cfg.class_spec{1} = cond_string(prediction,stim_face,upright,nonpredicted);
 cfg.class_spec{2} = cond_string(prediction,stim_house,upright,nonpredicted);
 cfg.class_spec{3} = cond_string(prediction,stim_letter,upright,nonpredicted);
 cfg.filenames = files_expectation;
-cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS/EXPECTATION/PRED_STIM_bal_64hz';
+cfg.outputdir = '/home/nicolas1/Documents/predictive_eeg/MVPA_RESULTS/EXPECTATION/UNPRED_STIM_bal_64hz';
 adam_MVPA_firstlevel(cfg);
