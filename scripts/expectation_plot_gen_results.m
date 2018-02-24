@@ -32,12 +32,42 @@ cfg.referenceline       = -2000;
 % EVE parameters
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_unbal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
-cfg_darks.trial_time_label    = 'complete_trial';
 cfg_darks.frst_level_analysis = 'cue_prediction';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
+
 %% ... Compute each channelpool (UNCORRECTED)
-xxx = compute_plot_GAT(cfg, cfg_darks);
+exp = compute_plot_GAT(cfg, cfg_darks);
+
+%% ... General settings for compute GAT matrix BALANCED
+
+% ADAM parameters
+cfg                     = [];            % clear the config variable
+cfg.iterations          = 250;           % reduce the number of iterations to save time
+cfg.mpcompcor_method    = 'uncorrected'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+cfg.referenceline       = -2000;
+
+% EVE parameters
+cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
+cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+cfg_darks.frst_level_analysis = 'cue_prediction';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
+
+
+%% ... Compute each channelpool (UNCORRECTED)
+tmp = compute_plot_GAT(cfg, cfg_darks);
+
+xxx = [tmp exp]
+
+
+[tmp.uncorrected exp.uncorrected]
+[tmp.uncorrected.balanced exp.uncorrected.unbalanced]
+
+tmp.uncorrected.compTrial
+exp.uncorrected.compTrial
+
+
+
 
 %% ... General settings for compute GAT matrix BALANCED
 cfg                   = [];                                                         % clear the config variable
