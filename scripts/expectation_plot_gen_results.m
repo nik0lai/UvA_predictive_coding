@@ -5,6 +5,23 @@
 % toolbox directly. EVERY parameter defined in cfg_darks structure is going
 % to feed my wrapping functions.
 
+% cue_prediction
+    % balanced
+        % uncorrected
+            % complete trial
+        % cluster_based
+            % complete trial
+            % stim window
+            % cue window
+    % unbalanced
+        % uncorrected
+            % complete trial
+        % cluster_based
+            % complete trial
+        
+% corr_pred_stim
+% incorr_pred_stim
+
 %% CLEAN THE PLACE! 
 clear;
 clc;
@@ -17,17 +34,20 @@ cfg_darks.plots_folder_path  = [main_path 'RESULTS/plots_gen_results/'];  % dell
 
 %% Session dealt with (expectation or taskrelevance)
 cfg_darks.session = 'expectation';
+%% limits of every GAT matrix plot
+minLim_gat = .30;
+maxLim_gat = .70;
 
 %% 1. Expectation
 %% 1.1 CUE PREDICTION
 
-%% ... General settings for compute GAT matrix UNBALANCED
-
+%% ... GS: Unbalanced, uncorrected, complete trial
 % ADAM parameters
 cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'uncorrected'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 cfg.referenceline       = -2000;
+cfg.acclim3D            = [minLim_gat maxLim_gat];
 
 % EVE parameters
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_unbal_64hz'];     % path to first level results 
@@ -36,16 +56,59 @@ cfg_darks.frst_level_analysis = 'cue_prediction';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 
-%% ... Compute each channelpool (UNCORRECTED)
-exp = compute_plot_GAT(cfg, cfg_darks);
+%% ... C&P
+tmp = compute_plot_GAT(cfg, cfg_darks);
 
-%% ... General settings for compute GAT matrix BALANCED
+exp.cue_prediction.unbalanced.uncorrected.compTrial = tmp.cue_prediction.unbalanced.uncorrected.compTrial;
+
+%% ... GS: Unbalanced, cluster_based, complete trial
+% ADAM parameters
+cfg                     = [];            % clear the config variable
+cfg.iterations          = 250;           % reduce the number of iterations to save time
+cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+cfg.referenceline       = -2000;
+cfg.acclim3D            = [minLim_gat maxLim_gat];
+
+% EVE parameters
+cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_unbal_64hz'];     % path to first level results 
+cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+cfg_darks.frst_level_analysis = 'cue_prediction';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
+
+
+%% ... C&P
+tmp = compute_plot_GAT(cfg, cfg_darks);
+
+exp.cue_prediction.unbalanced.cluster_based.compTrial = tmp.cue_prediction.unbalanced.cluster_based.compTrial;
+
+%% ... GS: Balanced, uncorrected, complete trial
 
 % ADAM parameters
 cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'uncorrected'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 cfg.referenceline       = -2000;
+cfg.acclim3D            = [minLim_gat maxLim_gat];
+
+% EVE parameters
+cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
+cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+cfg_darks.frst_level_analysis = 'cue_prediction';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
+%% ... C&P
+tmp = compute_plot_GAT(cfg, cfg_darks);
+
+% store in expectation structure
+exp.cue_prediction.balanced.uncorrected.compTrial = tmp.cue_prediction.balanced.uncorrected.compTrial;
+
+%% ... GS: Balanced, cluster_based, complete trial
+
+% ADAM parameters
+cfg                     = [];            % clear the config variable
+cfg.iterations          = 250;           % reduce the number of iterations to save time
+cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+cfg.referenceline       = -2000;
+cfg.acclim3D            = [minLim_gat maxLim_gat];
 
 % EVE parameters
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
@@ -53,211 +116,53 @@ cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                    
 cfg_darks.frst_level_analysis = 'cue_prediction';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
-
-%% ... Compute each channelpool (UNCORRECTED)
+%% ... C&P
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
-xxx = [tmp exp]
+% store in expectation structure
+exp.cue_prediction.balanced.cluster_based.compTrial = tmp.cue_prediction.balanced.cluster_based.compTrial;
+%% ... GS: Balanced, cluster_based, stim window
 
+% ADAM parameters
+cfg                     = [];            % clear the config variable
+cfg.iterations          = 250;           % reduce the number of iterations to save time
+cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.timelim             = [0 1000];
 
-[tmp.uncorrected exp.uncorrected]
-[tmp.uncorrected.balanced exp.uncorrected.unbalanced]
+% EVE parameters
+cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
+cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+cfg_darks.frst_level_analysis = 'cue_prediction';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/stim_time'];
 
-tmp.uncorrected.compTrial
-exp.uncorrected.compTrial
+%% ... C&P
+tmp = compute_plot_GAT(cfg, cfg_darks);
 
+exp.cue_prediction.balanced.cluster_based.timelim.stim_time = tmp.cue_prediction.balanced.cluster_based.timelim;
 
+%% ... GS: Balanced, cluster_based, cue window
 
+% ADAM parameters
+cfg                     = [];            % clear the config variable
+cfg.iterations          = 250;           % reduce the number of iterations to save time
+cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.timelim             = [-1950 -500];
 
-%% ... General settings for compute GAT matrix BALANCED
-cfg                   = [];                                                         % clear the config variable
-folder_name           = [result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
-cfg.iterations        = 250;                                                        % reduce the number of iterations to save time
+% EVE parameters
+cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
+cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+cfg_darks.frst_level_analysis = 'cue_prediction';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/cue_time'];
 
-channelpools          = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+%% ... C&P
+tmp = compute_plot_GAT(cfg, cfg_darks);
 
-%% ... Compute each channelpool (UNCORRECTED)
-% Correction method
-cfg.mpcompcor_method  = 'uncorrected';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+exp.cue_prediction.balanced.cluster_based.timelim.cue_time = tmp.cue_prediction.balanced.cluster_based.timelim;
 
-for countChann = 1:numel(channelpools);
-    currChann  = channelpools{countChann};                          % channel pool
-    
-    cfg.channelpool = currChann;                    % set channel pool
-    exp.cue_prediction.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
-    
-end
-
-%% ... Ploting (UNCORRECTED)
-% cfg = [];                                    % clear the config variable
-cfg.referenceline = -2000;                     % ver/hor reference lines
-
-% actual ploting
-adam_plot_MVPA(cfg, [exp.cue_prediction.(cfg.mpcompcor_method).complete_trial.ALL ...
-                    exp.cue_prediction.(cfg.mpcompcor_method).complete_trial.FRONTAL ...
-                    exp.cue_prediction.(cfg.mpcompcor_method).complete_trial.OCCIP]);
-pause(2)
-close(gcf)
-
-%% ... Plot each channpool separately (UNCORRECTED)
-
-folder_to_plot = '/cue_prediction/complete_trial';
-str_to_loop = exp.cue_prediction.(cfg.mpcompcor_method).complete_trial;
-
-for countChann = 1:numel(channelpools);     % counter
-    currChann  = channelpools{countChann};  % current channel pool
-
-    adam_plot_MVPA(cfg, str_to_loop.(currChann));                                              % plot
-          title([strrep(str_to_loop.(currChann).condname, '_', ' ') ' ' currChann ' channs']); % change title (get rid of underscores)
-    
-    pause(1); % pause to allow graphic to resize                 
-    
-    mkdir([plots_folder_path session folder_to_plot]) % create dir if non-existent. if dir exists, it will warn
-    
-    saveas(gcf, [plots_folder_path session folder_to_plot '/cue_prediction_' currChann '_' cfg.mpcompcor_method '.png']); % save graph
-    
-    pause(1)
-    close(gcf); 
-    
-    if countChann == size(channelpools, 2); %detele var with struct
-        clear str_to_loop
-    end
-        
-end
-
-
-close(gcf); 
-%% ... Compute each channelpool (CLUSTER_BASED)
-% Correction method
-cfg.mpcompcor_method  = 'cluster_based';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-
-for countChann = 1:numel(channelpools);
-    currChann  = channelpools{countChann};                          % channel pool
-    
-    cfg.channelpool = currChann;                    % set channel pool
-    exp.cue_prediction.(cfg.mpcompcor_method).complete_trial.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
-    
-end
-
-%% ... Ploting (CLUSTER_BASED)
-cfg.referenceline = -2000;                     % ver/hor reference lines
-
-% actual ploting
-adam_plot_MVPA(cfg, [exp.cue_prediction.(cfg.mpcompcor_method).complete_trial.ALL ...
-                    exp.cue_prediction.(cfg.mpcompcor_method).complete_trial.FRONTAL ...
-                    exp.cue_prediction.(cfg.mpcompcor_method).complete_trial.OCCIP]);
-pause(2)
-close(gcf)
-
-%% ... Plot each channpool separately (CLUSTER_BASED)
-
-folder_to_plot = '/cue_prediction/complete_trial/';
-str_to_loop = exp.cue_prediction.(cfg.mpcompcor_method).complete_trial;
-
-for countChann = 1:numel(channelpools);     % counter
-    currChann  = channelpools{countChann};  % current channel pool
-
-    adam_plot_MVPA(cfg, str_to_loop.(currChann));                                              % plot
-          title([strrep(str_to_loop.(currChann).condname, '_', ' ') ' ' currChann ' channs']); % change title (get rid of underscores)
-    
-    pause(1); % pause to allow graphic to resize                 
-    
-    mkdir([plots_folder_path session folder_to_plot]) % create dir if non-existent. if dir exists, it will warn
-    
-    saveas(gcf, [plots_folder_path session folder_to_plot '/cue_prediction_' currChann '_' cfg.mpcompcor_method '.png']); % save graph
-    close(gcf); 
-    
-    if countChann == size(channelpools, 2); %detele var with struct
-        clear str_to_loop
-    end
-        
-end
-
-
-close(gcf); 
-%% ... Compute GAT for STIM time window
-cfg.timelim           = [0 1000]; % constrain train/test time to stim time-window
-
-% Correction method
-cfg.mpcompcor_method  = 'cluster_based';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-
-for countChann = 1:numel(channelpools);
-    currChann  = channelpools{countChann};                          % channel pool
-    
-    cfg.channelpool = currChann;                    % set channel pool
-    exp.cue_prediction.(cfg.mpcompcor_method).stim_time.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
-    
-end
-
-%% ... Plot each channpool separately (CLUSTER_BASED)
-cfg.referenceline = [];                     % ver/hor reference lines
-
-folder_to_plot = '/cue_prediction/stim_time/';
-str_to_loop = exp.cue_prediction.(cfg.mpcompcor_method).stim_time;
-
-for countChann = 1:numel(channelpools);     % counter
-    currChann  = channelpools{countChann};  % current channel pool
-
-    adam_plot_MVPA(cfg, str_to_loop.(currChann));                                              % plot
-          title([strrep(str_to_loop.(currChann).condname, '_', ' ') ' ' currChann ' channs']); % change title (get rid of underscores)
-    
-    pause(1); % pause to allow graphic to resize                 
-    
-    mkdir([plots_folder_path session folder_to_plot]) % create dir if non-existent. if dir exists, it will warn
-    
-    saveas(gcf, [plots_folder_path session folder_to_plot '/cue_prediction_' currChann '_' cfg.mpcompcor_method '.png']); % save graph
-    close(gcf); 
-    
-    if countChann == size(channelpools, 2); %detele var with struct
-        clear str_to_loop
-    end
-        
-end
-
-
-close(gcf); 
-%% ... Compute GAT for CUE time window
-cfg.timelim           = [-1950 -500]; % constrain train/test time to stim time-window
-
-% Correction method
-cfg.mpcompcor_method  = 'cluster_based';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-
-for countChann = 1:numel(channelpools);
-    currChann  = channelpools{countChann};                          % channel pool
-    
-    cfg.channelpool = currChann;                    % set channel pool
-    exp.cue_prediction.(cfg.mpcompcor_method).cue_time.(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
-    
-end
-
-%% ... Plot each channpool separately (CLUSTER_BASED)
-cfg.referenceline = [];                     % ver/hor reference lines
-
-folder_to_plot = '/cue_prediction/cue_time/';
-str_to_loop = exp.cue_prediction.(cfg.mpcompcor_method).cue_time;
-
-for countChann = 1:numel(channelpools);     % counter
-    currChann  = channelpools{countChann};  % current channel pool
-
-    adam_plot_MVPA(cfg, str_to_loop.(currChann));                                              % plot
-          title([strrep(str_to_loop.(currChann).condname, '_', ' ') ' ' currChann ' channs']); % change title (get rid of underscores)
-    
-    pause(1); % pause to allow graphic to resize                 
-    
-    mkdir([plots_folder_path session folder_to_plot]) % create dir if non-existent. if dir exists, it will warn
-    
-    saveas(gcf, [plots_folder_path session folder_to_plot '/cue_prediction_' currChann '_' cfg.mpcompcor_method '.png']); % save graph
-    close(gcf); 
-    
-    if countChann == size(channelpools, 2); %detele var with struct
-        clear str_to_loop
-    end
-        
-end
-
-
-close(gcf); 
-%% ... Train on constrained time windows (convert to loop so it can be feed with many time-windows
+%%
+% %% ... Train on constrained time windows (convert to loop so it can be feed with many time-windows
 %  using this two different time-window to train the classifier show the
 %  difference in what can be decoded by the classifier. The first 170 ms
 %  are capable to decode the activity sustained for ~750 ms after the cue
@@ -366,7 +271,27 @@ close(gcf);
 
 
 %% 1.2 CORRECTLY PREDICTED STIM
-%% General settings for compute GAT matrix
+%% ... GS: Balanced, uncorrected, complete trial
+% ADAM parameters
+cfg                     = [];            % clear the config variable
+cfg.iterations          = 250;           % reduce the number of iterations to save time
+cfg.mpcompcor_method    = 'uncorrected'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+cfg.referenceline       = 0;
+cfg.acclim3D            = [minLim_gat maxLim_gat];
+
+% EVE parameters
+cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/PRED_STIM_bal_64hz'];     % path to first level results 
+cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+cfg_darks.frst_level_analysis = 'corr_predicted_stim';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
+
+%% ... C&P
+tmp = compute_plot_GAT(cfg, cfg_darks);
+
+tmp.uncorrected.balanced.compTrial
+
+
+%%
 cfg                   = [];                                                         % clear the config variable
 folder_name          = [result_folder_path  'EXPECTATION/PRED_STIM_bal_64hz'];    % path to first level results 
 cfg.iterations        = 250;                                                        % reduce the number of iterations to save time
