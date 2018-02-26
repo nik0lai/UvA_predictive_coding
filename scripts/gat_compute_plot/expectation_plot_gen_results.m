@@ -3,7 +3,7 @@
 % presentation.
 % EVERY parameter defined in the cfg structure is going to feed the ADAM
 % toolbox directly. EVERY parameter defined in cfg_darks structure is going
-% to feed my wrapping functions.
+% to feed my wrapping function.
 
 % cue_prediction
     % balanced
@@ -34,7 +34,8 @@ cfg_darks.plots_folder_path  = [main_path 'RESULTS/plots_gen_results/'];  % dell
 
 %% Session dealt with (expectation or taskrelevance)
 cfg_darks.session = 'expectation';
-%% limits of every GAT matrix plot
+
+%% Limits of ALL GAT matrix plot
 minLim_gat = .30;
 maxLim_gat = .70;
 
@@ -57,7 +58,7 @@ cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 
 %% ... C&P
-tmp = [];
+clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.cue_prediction.unbalanced.uncorrected.compTrial = tmp.cue_prediction.unbalanced.uncorrected.compTrial;
@@ -78,7 +79,7 @@ cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 
 %% ... C&P
-tmp = [];
+clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.cue_prediction.unbalanced.cluster_based.compTrial = tmp.cue_prediction.unbalanced.cluster_based.compTrial;
@@ -98,7 +99,7 @@ cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                    
 cfg_darks.frst_level_analysis = 'cue_prediction';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 %% ... C&P
-tmp = [];
+clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.cue_prediction.balanced.uncorrected.compTrial = tmp.cue_prediction.balanced.uncorrected.compTrial;
@@ -118,7 +119,7 @@ cfg_darks.frst_level_analysis = 'cue_prediction';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
-tmp = [];
+clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.cue_prediction.balanced.cluster_based.compTrial = tmp.cue_prediction.balanced.cluster_based.compTrial;
@@ -138,7 +139,7 @@ cfg_darks.frst_level_analysis = 'cue_prediction';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/stim_time'];
 
 %% ... C&P
-tmp = [];
+clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.cue_prediction.balanced.cluster_based.timelim.stim_time = tmp.cue_prediction.balanced.cluster_based.timelim;
@@ -158,7 +159,7 @@ cfg_darks.frst_level_analysis = 'cue_prediction';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/cue_time'];
 
 %% ... C&P
-tmp = [];
+clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.cue_prediction.balanced.cluster_based.timelim.cue_time = tmp.cue_prediction.balanced.cluster_based.timelim;
@@ -288,7 +289,7 @@ cfg_darks.frst_level_analysis = 'corr_predicted_stim';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
-tmp = [];
+clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.corr_predicted_stim.balanced.uncorrected.compTrial = tmp.corr_predicted_stim.balanced.uncorrected.compTrial;
@@ -308,7 +309,7 @@ cfg_darks.frst_level_analysis = 'corr_predicted_stim';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
-tmp = [];
+clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.corr_predicted_stim.balanced.cluster_based.compTrial = tmp.corr_predicted_stim.balanced.cluster_based.compTrial;
@@ -328,7 +329,7 @@ cfg_darks.frst_level_analysis = 'corr_predicted_stim';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
-tmp = [];
+clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.corr_predicted_stim.balanced.cluster_based.timelim.stim_time = tmp.corr_predicted_stim.balanced.cluster_based.timelim;
@@ -348,7 +349,7 @@ cfg_darks.frst_level_analysis = 'corr_predicted_stim';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
-tmp = [];
+clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.corr_predicted_stim.balanced.cluster_based.timelim.cue_time = tmp.corr_predicted_stim.balanced.cluster_based.timelim;
@@ -369,7 +370,7 @@ cfg_darks.frst_level_analysis = 'incorr_predicted_stim';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
-tmp = [];
+clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.incorr_predicted_stim.balanced.uncorrected.compTrial = tmp.incorr_predicted_stim.balanced.uncorrected.compTrial;
@@ -389,7 +390,7 @@ cfg_darks.frst_level_analysis = 'incorr_predicted_stim';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
-tmp = [];
+clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.incorr_predicted_stim.balanced.cluster_based.compTrial = tmp.incorr_predicted_stim.balanced.cluster_based.compTrial;
@@ -409,7 +410,7 @@ cfg_darks.frst_level_analysis = 'incorr_predicted_stim';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
-tmp = [];
+clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.incorr_predicted_stim.balanced.cluster_based.timelim.stim_time = tmp.incorr_predicted_stim.balanced.cluster_based.timelim;
@@ -429,7 +430,7 @@ cfg_darks.frst_level_analysis = 'incorr_predicted_stim';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
-tmp = [];
+clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.incorr_predicted_stim.balanced.cluster_based.timelim.cue_time = tmp.incorr_predicted_stim.balanced.cluster_based.timelim;
