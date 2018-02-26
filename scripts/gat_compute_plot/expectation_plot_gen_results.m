@@ -5,6 +5,11 @@
 % toolbox directly. EVERY parameter defined in cfg_darks structure is going
 % to feed my wrapping function.
 
+% % % TODO
+% Use diagonal plots for weird things (e.g. below chance decoding, near
+% above chance, ... etc.)
+
+
 % cue_prediction
     % balanced
         % uncorrected
@@ -83,6 +88,47 @@ clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.cue_prediction.unbalanced.cluster_based.compTrial = tmp.cue_prediction.unbalanced.cluster_based.compTrial;
+
+%% ... GS: Unbalanced, stim window, cluster_based
+
+% ADAM parameters
+cfg                     = [];            % clear the config variable
+cfg.iterations          = 250;           % reduce the number of iterations to save time
+cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.timelim             = [0 1000];
+
+% EVE parameters
+cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_unbal_64hz'];     % path to first level results 
+cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+cfg_darks.frst_level_analysis = 'cue_prediction';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/stim_time'];
+
+%% ... C&P
+clear tmp
+tmp = compute_plot_GAT(cfg, cfg_darks);
+
+exp.cue_prediction.unbalanced.cluster_based.timelim.stim_time = tmp.cue_prediction.unbalanced.cluster_based.timelim;
+%% ... GS: Balanced, cue window, cluster_based
+
+% ADAM parameters
+cfg                     = [];            % clear the config variable
+cfg.iterations          = 250;           % reduce the number of iterations to save time
+cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.timelim             = [-1950 -500];
+
+% EVE parameters
+cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_unbal_64hz'];     % path to first level results 
+cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+cfg_darks.frst_level_analysis = 'cue_prediction';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/cue_time'];
+
+%% ... C&P
+clear tmp
+tmp = compute_plot_GAT(cfg, cfg_darks);
+
+exp.cue_prediction.unbalanced.cluster_based.timelim.cue_time = tmp.cue_prediction.unbalanced.cluster_based.timelim;
 
 %% ... GS: Balanced, complete trial, uncorrected
 
