@@ -57,6 +57,7 @@ cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 
 %% ... C&P
+tmp = [];
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.cue_prediction.unbalanced.uncorrected.compTrial = tmp.cue_prediction.unbalanced.uncorrected.compTrial;
@@ -77,6 +78,7 @@ cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 
 %% ... C&P
+tmp = [];
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.cue_prediction.unbalanced.cluster_based.compTrial = tmp.cue_prediction.unbalanced.cluster_based.compTrial;
@@ -96,6 +98,7 @@ cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                    
 cfg_darks.frst_level_analysis = 'cue_prediction';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 %% ... C&P
+tmp = [];
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.cue_prediction.balanced.uncorrected.compTrial = tmp.cue_prediction.balanced.uncorrected.compTrial;
@@ -115,6 +118,7 @@ cfg_darks.frst_level_analysis = 'cue_prediction';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
+tmp = [];
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.cue_prediction.balanced.cluster_based.compTrial = tmp.cue_prediction.balanced.cluster_based.compTrial;
@@ -134,6 +138,7 @@ cfg_darks.frst_level_analysis = 'cue_prediction';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/stim_time'];
 
 %% ... C&P
+tmp = [];
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.cue_prediction.balanced.cluster_based.timelim.stim_time = tmp.cue_prediction.balanced.cluster_based.timelim;
@@ -153,6 +158,7 @@ cfg_darks.frst_level_analysis = 'cue_prediction';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/cue_time'];
 
 %% ... C&P
+tmp = [];
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.cue_prediction.balanced.cluster_based.timelim.cue_time = tmp.cue_prediction.balanced.cluster_based.timelim;
@@ -312,7 +318,6 @@ exp.corr_predicted_stim.balanced.cluster_based.compTrial = tmp.corr_predicted_st
 cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-cfg.referenceline       = 0;
 cfg.acclim3D            = [minLim_gat maxLim_gat];
 cfg.timelim             = [0 1000];
 
@@ -333,7 +338,6 @@ exp.corr_predicted_stim.balanced.cluster_based.timelim.stim_time = tmp.corr_pred
 cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-cfg.referenceline       = 0;
 cfg.acclim3D            = [minLim_gat maxLim_gat];
 cfg.timelim             = [-1950 -500];
 
@@ -395,7 +399,6 @@ exp.incorr_predicted_stim.balanced.cluster_based.compTrial = tmp.incorr_predicte
 cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-cfg.referenceline       = 0;
 cfg.acclim3D            = [minLim_gat maxLim_gat];
 cfg.timelim             = [0 1000];
 
@@ -416,7 +419,6 @@ exp.incorr_predicted_stim.balanced.cluster_based.timelim.stim_time = tmp.incorr_
 cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-cfg.referenceline       = 0;
 cfg.acclim3D            = [minLim_gat maxLim_gat];
 cfg.timelim             = [-1950 -500];
 
