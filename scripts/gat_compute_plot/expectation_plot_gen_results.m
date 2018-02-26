@@ -102,13 +102,14 @@ cfg.timelim             = [0 1000];
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_unbal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_prediction';
-cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/stim_time'];
+cfg_darks.trialtime           = 'stim_time';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
 clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
-exp.cue_prediction.unbalanced.cluster_based.timelim.stim_time = tmp.cue_prediction.unbalanced.cluster_based.timelim;
+exp.cue_prediction.unbalanced.cluster_based.timelim.stim_time = tmp.cue_prediction.unbalanced.cluster_based.timelim.stim_time;
 %% ... GS: Balanced, cue window, cluster_based
 
 % ADAM parameters
@@ -122,13 +123,14 @@ cfg.timelim             = [-1950 -500];
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_unbal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_prediction';
-cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/cue_time'];
+cfg_darks.trialtime           = 'cue_time';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
 clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
-exp.cue_prediction.unbalanced.cluster_based.timelim.cue_time = tmp.cue_prediction.unbalanced.cluster_based.timelim;
+exp.cue_prediction.unbalanced.cluster_based.timelim.cue_time = tmp.cue_prediction.unbalanced.cluster_based.timelim.cue_time;
 
 %% ... GS: Balanced, complete trial, uncorrected
 
@@ -182,13 +184,14 @@ cfg.timelim             = [0 1000];
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_prediction';
-cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/stim_time'];
+cfg_darks.trialtime           = 'stim_time';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
 clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
-exp.cue_prediction.balanced.cluster_based.timelim.stim_time = tmp.cue_prediction.balanced.cluster_based.timelim;
+exp.cue_prediction.balanced.cluster_based.timelim.stim_time = tmp.cue_prediction.balanced.cluster_based.timelim.stim_time;
 %% ... GS: Balanced, cue window, cluster_based
 
 % ADAM parameters
@@ -202,13 +205,14 @@ cfg.timelim             = [-1950 -500];
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_prediction';
-cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/cue_time'];
+cfg_darks.trialtime           = 'cue_time';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
 clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
-exp.cue_prediction.balanced.cluster_based.timelim.cue_time = tmp.cue_prediction.balanced.cluster_based.timelim;
+exp.cue_prediction.balanced.cluster_based.timelim.cue_time = tmp.cue_prediction.balanced.cluster_based.timelim.cue_time;
 
 %%
 % %% ... Train on constrained time windows (convert to loop so it can be feed with many time-windows
@@ -372,13 +376,14 @@ cfg.timelim             = [0 1000];
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/PRED_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'corr_predicted_stim';
-cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/stim_time'];
+cfg_darks.trialtime           = 'stim_time';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
 clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
-exp.corr_predicted_stim.balanced.cluster_based.timelim.stim_time = tmp.corr_predicted_stim.balanced.cluster_based.timelim;
+exp.corr_predicted_stim.balanced.cluster_based.timelim.stim_time = tmp.corr_predicted_stim.balanced.cluster_based.timelim.stim_time;
 
 %% ... GS: Balanced, cue window, cluster_based
 % ADAM parameters
@@ -392,13 +397,14 @@ cfg.timelim             = [-1950 -500];
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/PRED_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'corr_predicted_stim';
-cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/cue_time'];
+cfg_darks.trialtime           = 'cue_time';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
 clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
-exp.corr_predicted_stim.balanced.cluster_based.timelim.cue_time = tmp.corr_predicted_stim.balanced.cluster_based.timelim;
+exp.corr_predicted_stim.balanced.cluster_based.timelim.cue_time = tmp.corr_predicted_stim.balanced.cluster_based.timelim.cue_time;
 
 %% 1.2 INCORRECTLY PREDICTED STIM
 %% ... GS: Balanced, complete trial, uncorrected
@@ -453,13 +459,14 @@ cfg.timelim             = [0 1000];
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/UNPRED_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'incorr_predicted_stim';
-cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/stim_time'];
+cfg_darks.trialtime           = 'stim_time';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
 clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
-exp.incorr_predicted_stim.balanced.cluster_based.timelim.stim_time = tmp.incorr_predicted_stim.balanced.cluster_based.timelim;
+exp.incorr_predicted_stim.balanced.cluster_based.timelim.stim_time = tmp.incorr_predicted_stim.balanced.cluster_based.timelim.stim_time;
 
 %% ... GS: Balanced, cue window, cluster_based
 % ADAM parameters
@@ -473,10 +480,11 @@ cfg.timelim             = [-1950 -500];
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/UNPRED_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'incorr_predicted_stim';
-cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/cue_time'];
+cfg_darks.trialtime           = 'cue_time';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
 %% ... C&P
 clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
-exp.incorr_predicted_stim.balanced.cluster_based.timelim.cue_time = tmp.incorr_predicted_stim.balanced.cluster_based.timelim;
+exp.incorr_predicted_stim.balanced.cluster_based.timelim.cue_time = tmp.incorr_predicted_stim.balanced.cluster_based.timelim.cue_time;
