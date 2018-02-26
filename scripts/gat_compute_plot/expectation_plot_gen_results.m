@@ -326,7 +326,7 @@ cfg.timelim             = [0 1000];
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/PRED_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'corr_predicted_stim';
-cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/stim_time'];
 
 %% ... C&P
 clear tmp
@@ -346,7 +346,7 @@ cfg.timelim             = [-1950 -500];
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/PRED_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'corr_predicted_stim';
-cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/cue_time'];
 
 %% ... C&P
 clear tmp
@@ -407,7 +407,7 @@ cfg.timelim             = [0 1000];
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/UNPRED_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'incorr_predicted_stim';
-cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/stim_time'];
 
 %% ... C&P
 clear tmp
@@ -427,7 +427,7 @@ cfg.timelim             = [-1950 -500];
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/UNPRED_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'incorr_predicted_stim';
-cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/cue_time'];
 
 %% ... C&P
 clear tmp
