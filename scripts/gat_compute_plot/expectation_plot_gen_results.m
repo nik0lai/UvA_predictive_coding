@@ -48,7 +48,8 @@ minLim_gat2d = .49;
 maxLim_gat2d = .60;
 
 %% Fields of cfg_darks that have to be reset on every analysis
-fields_to_remove = {'folder_name', 'channelpools', 'frst_level_analysis', 'trialtime', 'folder_to_plot'};
+fields_to_remove = {'folder_name', 'channelpools', 'frst_level_analysis', 'trialtime', 'folder_to_plot', ...
+                    'special_anal', 'balancing', 'trial_time_label'};
 
 %% 1. Expectation
 %% 1.1 CUE PREDICTION
