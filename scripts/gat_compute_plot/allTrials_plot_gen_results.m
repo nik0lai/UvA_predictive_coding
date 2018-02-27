@@ -46,7 +46,7 @@ cfg.referenceline       = -2000;
 cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_64hz_allTrials'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_prediction';
@@ -69,7 +69,7 @@ cfg.referenceline       = -2000;
 cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_64hz_allTrials'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_prediction';
@@ -99,7 +99,7 @@ cfg.referenceline       = -2000;
 cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CUE_CAT_64hz_allTrials'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_category';
@@ -122,7 +122,7 @@ cfg.referenceline       = -2000;
 cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CUE_CAT_64hz_allTrials'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_category';
