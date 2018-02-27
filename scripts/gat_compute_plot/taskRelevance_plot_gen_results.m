@@ -62,7 +62,7 @@ cfg.referenceline       = -2000;
 cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CAT_PRED_unbal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_category';
@@ -84,7 +84,7 @@ cfg.referenceline       = -2000;
 cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CAT_PRED_unbal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_category';
@@ -107,7 +107,7 @@ cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [0 1000];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CAT_PRED_unbal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_category';
@@ -130,7 +130,7 @@ cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [-1950 -500];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CAT_PRED_unbal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_category';
@@ -153,7 +153,7 @@ cfg.referenceline       = -2000;
 cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CAT_PRED_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_category';
@@ -174,7 +174,7 @@ cfg.referenceline       = -2000;
 cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CAT_PRED_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_category';
@@ -196,7 +196,7 @@ cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [0 1000];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CAT_PRED_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_category';
@@ -219,7 +219,7 @@ cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [-1950 -500];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CAT_PRED_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_category';
@@ -253,7 +253,7 @@ cfg.trainlim             = [-1950 -1780];
 cfg.reduce_dims = 'avtrain';
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CAT_PRED_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_category';
@@ -278,7 +278,7 @@ cfg.trainlim             = [-1950 -1300];
 cfg.reduce_dims = 'avtrain';
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CAT_PRED_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_category';
@@ -301,7 +301,7 @@ cfg.referenceline       = 0;
 cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CATCORR_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cat_corr_stim';
@@ -322,7 +322,7 @@ cfg.referenceline       = 0;
 cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CATCORR_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cat_corr_stim';
@@ -343,7 +343,7 @@ cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [0 1000];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CATCORR_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cat_corr_stim';
@@ -365,7 +365,7 @@ cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [-1950 -500];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CATCORR_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cat_corr_stim';
@@ -388,7 +388,7 @@ cfg.referenceline       = 0;
 cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CATINCORR_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cat_incorr_stim';
@@ -409,7 +409,7 @@ cfg.referenceline       = 0;
 cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CATINCORR_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cat_incorr_stim';
@@ -430,7 +430,7 @@ cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [0 1000];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CATINCORR_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cat_incorr_stim';
@@ -452,7 +452,7 @@ cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [-1950 -500];
 
 % EVE parameters
-remove_fields(cfg_darks, fields_to_remove);
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'TASKRELEVANCE/CATINCORR_STIM_bal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cat_incorr_stim';
