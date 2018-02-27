@@ -110,7 +110,7 @@ clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.cue_prediction.unbalanced.cluster_based.timelim.stim_time = tmp.cue_prediction.unbalanced.cluster_based.timelim.stim_time;
-%% ... GS: Balanced, cue window, cluster_based
+%% ... GS: Unbalanced, cue window, cluster_based
 
 % ADAM parameters
 cfg                     = [];            % clear the config variable
