@@ -223,19 +223,42 @@ exp.cue_prediction.balanced.cluster_based.timelim.cue_time = tmp.cue_prediction.
 %  classifier is capable to decode up until the presentation of the target
 %  item.
 
+% % % %% ... GS: Balanced, cue window, cluster_based
+% % % 
+% % % % ADAM parameters
+% % % cfg                     = [];            % clear the config variable
+% % % cfg.iterations          = 250;           % reduce the number of iterations to save time
+% % % cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+% % % cfg.acclim3D            = [minLim_gat maxLim_gat];
+% % % cfg.trainlim             = [-1950 -1780];
+% % % %
+% % % cfg.reduce_dims = 'avtrain';
+% % % 
+% % % % EVE parameters
+% % % cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
+% % % cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+% % % cfg_darks.frst_level_analysis = 'cue_prediction';
+% % % cfg_darks.trialtime           = 'cue_shortTrain';
+% % % cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
+% % % 
+% % % %% ... C&P
+% % % clear tmp
+% % % tmp = compute_plot_GAT(cfg, cfg_darks);
+% % % 
+% % % exp.cue_prediction.balanced.cluster_based.timelim.cue_time = tmp.cue_prediction.balanced.cluster_based.timelim.cue_time;
 
-% % % cfg.timelim       = [];
-% % % cfg.referenceline = [];
+% % % % cfg.timelim       = [];
+% % % % cfg.referenceline = [];
 % % % 
 % % % % training limits, add new ones as new rows
-% % % trainlims = [-1950 -1780; ...
+% % % % trainlims = [-1950 -1780; ...
 % % %              -1950 -1300];
 % % % 
 % % % % average training and display testing
-% % % cfg.reduce_dims       = 'avtrain';
+% % % % cfg.reduce_dims       = 'avtrain';
 % % % 
 % % % % Correction method
-% % % cfg.mpcompcor_method  = 'cluster_based';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+% % % % cfg.mpcompcor_method  = 'cluster_based';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 % % % 
 % % % 
 % % % for countTTime      = 1:size(trainlims, 1);
@@ -488,3 +511,6 @@ clear tmp
 tmp = compute_plot_GAT(cfg, cfg_darks);
 
 exp.incorr_predicted_stim.balanced.cluster_based.timelim.cue_time = tmp.incorr_predicted_stim.balanced.cluster_based.timelim.cue_time;
+
+%% 4. Save GAT computed
+save('/media/nicolas/Midgard/EEG_uva_fhr/Predictive_EEG/RESULTS/plots_gen_results/expectation/expectation_GAT.mat', 'exp')
