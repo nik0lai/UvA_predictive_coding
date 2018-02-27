@@ -41,8 +41,11 @@ cfg_darks.plots_folder_path  = [main_path 'RESULTS/plots_gen_results/'];  % dell
 cfg_darks.session = 'expectation';
 
 %% Limits of ALL GAT matrix plot
-minLim_gat = .30;
-maxLim_gat = .70;
+minLim_gat3d = .30;
+maxLim_gat3d = .70;
+
+minLim_gat2d = .49;
+maxLim_gat2d = .60;
 
 %% 1. Expectation
 %% 1.1 CUE PREDICTION
@@ -53,7 +56,7 @@ cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'uncorrected'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 cfg.referenceline       = -2000;
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_unbal_64hz'];     % path to first level results 
@@ -74,7 +77,7 @@ cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 cfg.referenceline       = -2000;
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_unbal_64hz'];     % path to first level results 
@@ -95,7 +98,7 @@ exp.cue_prediction.unbalanced.cluster_based.compTrial = tmp.cue_prediction.unbal
 cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [0 1000];
 
 % EVE parameters
@@ -116,7 +119,7 @@ exp.cue_prediction.unbalanced.cluster_based.timelim.stim_time = tmp.cue_predicti
 cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [-1950 -500];
 
 % EVE parameters
@@ -139,7 +142,7 @@ cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'uncorrected'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 cfg.referenceline       = -2000;
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
@@ -158,7 +161,7 @@ cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 cfg.referenceline       = -2000;
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
@@ -177,7 +180,7 @@ exp.cue_prediction.balanced.cluster_based.compTrial = tmp.cue_prediction.balance
 cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [0 1000];
 
 % EVE parameters
@@ -198,7 +201,7 @@ exp.cue_prediction.balanced.cluster_based.timelim.stim_time = tmp.cue_prediction
 cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [-1950 -500];
 
 % EVE parameters
@@ -223,128 +226,53 @@ exp.cue_prediction.balanced.cluster_based.timelim.cue_time = tmp.cue_prediction.
 %  classifier is capable to decode up until the presentation of the target
 %  item.
 
-% % % %% ... GS: Balanced, cue window, cluster_based
-% % % 
-% % % % ADAM parameters
-% % % cfg                     = [];            % clear the config variable
-% % % cfg.iterations          = 250;           % reduce the number of iterations to save time
-% % % cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-% % % cfg.acclim3D            = [minLim_gat maxLim_gat];
-% % % cfg.trainlim             = [-1950 -1780];
-% % % %
-% % % cfg.reduce_dims = 'avtrain';
-% % % 
-% % % % EVE parameters
-% % % cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
-% % % cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
-% % % cfg_darks.frst_level_analysis = 'cue_prediction';
-% % % cfg_darks.trialtime           = 'cue_shortTrain';
-% % % cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
-% % % 
-% % % %% ... C&P
-% % % clear tmp
-% % % tmp = compute_plot_GAT(cfg, cfg_darks);
-% % % 
-% % % exp.cue_prediction.balanced.cluster_based.timelim.cue_time = tmp.cue_prediction.balanced.cluster_based.timelim.cue_time;
+%% ... GS: Balanced, cue window, cluster_based (CUE TRAINING)
 
-% % % % cfg.timelim       = [];
-% % % % cfg.referenceline = [];
-% % % 
-% % % % training limits, add new ones as new rows
-% % % % trainlims = [-1950 -1780; ...
-% % %              -1950 -1300];
-% % % 
-% % % % average training and display testing
-% % % % cfg.reduce_dims       = 'avtrain';
-% % % 
-% % % % Correction method
-% % % % cfg.mpcompcor_method  = 'cluster_based';                                            % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-% % % 
-% % % 
-% % % for countTTime      = 1:size(trainlims, 1);
-% % %     cfg.trainlim    =  trainlims(countTTime ,:);
-% % %     trainlim_lab = strrep(strrep(num2str(cfg.trainlim), ' ', '_'), '-', 'm');
-% % %     
-% % %     
-% % %     for countChann = 1:numel(channelpools);
-% % %         currChann  = channelpools{countChann};          % channel pool
-% % %         
-% % %         cfg.channelpool = currChann;                    % set channel pool
-% % %         exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.(trainlim_lab).(currChann) = adam_compute_group_MVPA(cfg, folder_name); % compute stats
-% % %         
-% % %     end
-% % %     
-% % %     if countTTime == size(trainlims,1)
-% % %         cfg.trainlim = [];
-% % %         cfg.reduce_dims = [];
-% % %     end
-% % %         
-% % % end
+% ADAM parameters
+cfg                     = [];            % clear the config variable
+cfg.iterations          = 250;           % reduce the number of iterations to save time
+cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+cfg.acclim2D            = [minLim_gat2d maxLim_gat2d];
+%
+cfg.trainlim             = [-1950 -1780];
+cfg.reduce_dims = 'avtrain';
 
-%%
+% EVE parameters
+cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
+cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+cfg_darks.frst_level_analysis = 'cue_prediction';
+cfg_darks.trialtime           = 'cue_shortTrain';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
-% % % folder_to_plot = '/cue_prediction/cue_trainlim/';
-% % % 
-% % % str_to_loop = exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime;
-% % % 
-% % % train_labs = fieldnames(str_to_loop);
-% % % 
-% % % 
-% % % for countTTime      = 1:numel(train_labs);
-% % %  
-% % %     
-% % %     for countChann = 1:numel(channelpools);
-% % %         currChann  = channelpools{countChann};          % channel pool
-% % %         
-% % %         cfg.channelpool = currChann;                    % set channel pool
-% % %               
-% % %         adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.(train_labs{countTTime}).(currChann))
-% % %         pause(2); % pause to allow the graphic to resize           
-% % %         
-% % %         mkdir([plots_folder_path session folder_to_plot]); % create dir if non-existent. if dir exists, it will warn
-% % %         saveas(gcf, [plots_folder_path session folder_to_plot '/cue_pred_' trainlim_lab '_' cfg.mpcompcor_method '.png']);
-% % %         close(gcf);
-% % %     
-% % %     
-% % %     end
-% % %     
-% % %     %%CLEANING%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% % %     if countTTime == size(trainlims,1);
-% % %         cfg.trainlim = [];
-% % %         cfg.reduce_dims = [];
-% % %     end
-% % %     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% % %         
-% % % end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-%% BUG
-% % % cfg = rmfield(cfg, 'trainlim')
-% % % 
-% % % adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1300.ALL)
-% % % adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1300.FRONTAL)
-% % % adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1300.OCCIP)
-% % % 
-% % % adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1780.ALL)
-% % % adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1780.FRONTAL)
-% % % adam_plot_MVPA(cfg, exp.cue_prediction.(cfg.mpcompcor_method).cue_traintime.m1950_m1780.OCCIP)
+%% ... C&P
+clear tmp
+tmp = compute_plot_GAT(cfg, cfg_darks);
 
+exp.cue_prediction.balanced.cluster_based.trainlim.cue_shortTrain = tmp.cue_prediction.balanced.cluster_based.trainlim.cue_shortTrain;
 
-%%
+%% ... GS: Balanced, cue window, cluster_based (CUE TRAINING)
 
-% % % short_train                  = adam_compute_group_MVPA(cfg, folder_name); % compute stats
-% % % adam_plot_MVPA(cfg, short_train);
-% % %     pause(1); % pause to allow the graphic to resize                 
-% % %     saveas(gcf, [plots_folder_path 'expectation/cue_trainlim/cue_pred_-1950to-1780_corr.png']);
-% % %     close(gcf);
-% % % 
-% % % cfg.trainlim           = [-1950 -1300];
-% % % cfg.channelpool        = 'ALL';
-% % % large_train                   = adam_compute_group_MVPA(cfg, folder_name); % compute stats
-% % % adam_plot_MVPA(cfg, large_train);
-% % %     pause(1); % pause to allow the graphic to resize                 
-% % %     saveas(gcf, [plots_folder_path 'expectation/cue_trainlim/cue_pred_-1950to-1300_corr.png']);
-% % %     close(gcf);
+% ADAM parameters
+cfg                     = [];            % clear the config variable
+cfg.iterations          = 250;           % reduce the number of iterations to save time
+cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
+cfg.acclim2D            = [minLim_gat2d maxLim_gat2d];
+%
+cfg.trainlim             = [-1950 -1300];
+cfg.reduce_dims = 'avtrain';
 
+% EVE parameters
+cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_bal_64hz'];     % path to first level results 
+cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
+cfg_darks.frst_level_analysis = 'cue_prediction';
+cfg_darks.trialtime           = 'cue_longTrain';
+cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
+
+%% ... C&P
+clear tmp
+tmp = compute_plot_GAT(cfg, cfg_darks);
+
+exp.cue_prediction.balanced.cluster_based.trainlim.cue_longTrain = tmp.cue_prediction.balanced.cluster_based.trainlim.cue_longTrain;
 
 %% 1.2 CORRECTLY PREDICTED STIM
 %% ... GS: Balanced, complete trial, uncorrected
@@ -353,7 +281,7 @@ cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'uncorrected'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 cfg.referenceline       = 0;
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/PRED_STIM_bal_64hz'];     % path to first level results 
@@ -373,7 +301,7 @@ cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 cfg.referenceline       = 0;
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/PRED_STIM_bal_64hz'];     % path to first level results 
@@ -392,7 +320,7 @@ exp.corr_predicted_stim.balanced.cluster_based.compTrial = tmp.corr_predicted_st
 cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [0 1000];
 
 % EVE parameters
@@ -413,7 +341,7 @@ exp.corr_predicted_stim.balanced.cluster_based.timelim.stim_time = tmp.corr_pred
 cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [-1950 -500];
 
 % EVE parameters
@@ -436,7 +364,7 @@ cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'uncorrected'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 cfg.referenceline       = 0;
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/UNPRED_STIM_bal_64hz'];     % path to first level results 
@@ -456,7 +384,7 @@ cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
 cfg.referenceline       = 0;
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 
 % EVE parameters
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/UNPRED_STIM_bal_64hz'];     % path to first level results 
@@ -475,7 +403,7 @@ exp.incorr_predicted_stim.balanced.cluster_based.compTrial = tmp.incorr_predicte
 cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [0 1000];
 
 % EVE parameters
@@ -496,7 +424,7 @@ exp.incorr_predicted_stim.balanced.cluster_based.timelim.stim_time = tmp.incorr_
 cfg                     = [];            % clear the config variable
 cfg.iterations          = 250;           % reduce the number of iterations to save time
 cfg.mpcompcor_method    = 'cluster_based'; % multiple comparison correction method ('uncorrected' for uncorrected ploting)
-cfg.acclim3D            = [minLim_gat maxLim_gat];
+cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [-1950 -500];
 
 % EVE parameters
