@@ -61,6 +61,7 @@ clear tmp
 
 exp.(anal).(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label) = ...
 tmp.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label);
+
 %% ... GS: ALL TRIALS, complete trial, cluster_based
 % ADAM parameters
 cfg                     = [];            % clear the config variable
@@ -116,6 +117,7 @@ tmp.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method)
 %% 2. Task relevance
 %% Session dealt with (expectation or taskrelevance)
 cfg_darks.session = 'taskRelevance';
+
 %% 1.1 CUE CATEGORY
 
 %% ... GS: ALL TRIALS, complete trial, uncorrected
@@ -135,12 +137,14 @@ cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 %
 cfg_darks.special_anal        = anal;
 cfg_darks.balancing           = 'balanced';
+
 %% ... C&P
 clear tmp
 [tmp, cfg_darks] = compute_plot_GAT(cfg, cfg_darks);
 
 rel.(anal).(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label) = ...
 tmp.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label);
+
 %% ... GS: ALL TRIALS, complete trial, cluster_based
 % ADAM parameters
 cfg                     = [];            % clear the config variable
