@@ -91,7 +91,6 @@ cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                    
 cfg_darks.frst_level_analysis = 'cue_category';
 cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 
-
 %% ... C&P
 clear tmp
 [tmp, cfg_darks] = compute_plot_GAT(cfg, cfg_darks);
@@ -119,8 +118,8 @@ cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 clear tmp
 [tmp, cfg_darks] = compute_plot_GAT(cfg, cfg_darks);
 
-rel.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label) = ...
-tmp.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label);
+rel.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label).(cfg_darks.trialtime) = ...
+tmp.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label).(cfg_darks.trialtime);
 %% ... GS: Unbalanced, cue window, cluster_based
 
 % ADAM parameters
@@ -163,8 +162,8 @@ cfg_darks.folder_to_plot      = ['/' cfg_darks.frst_level_analysis '/'];
 clear tmp
 [tmp, cfg_darks] = compute_plot_GAT(cfg, cfg_darks);
 
-rel.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label).(cfg_darks.trialtime) = ...
-tmp.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label).(cfg_darks.trialtime);
+rel.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label) = ...
+tmp.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label);
 %% ... GS: Balanced, complete trial, cluster_based
 
 % ADAM parameters
@@ -292,6 +291,7 @@ clear tmp
 
 rel.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label).(cfg_darks.trialtime) = ...
 tmp.(cfg_darks.frst_level_analysis).(cfg_darks.balancing).(cfg.mpcompcor_method).(cfg_darks.trial_time_label).(cfg_darks.trialtime);
+
 %% 1.2 CATEGORY CORRECT STIM
 %% ... GS: Balanced, complete trial, uncorrected
 % ADAM parameters
