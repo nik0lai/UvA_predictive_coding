@@ -130,6 +130,7 @@ cfg.acclim3D            = [minLim_gat3d maxLim_gat3d];
 cfg.timelim             = [-1950 -500];
 
 % EVE parameters
+cfg_darks = remove_fields(cfg_darks, fields_to_remove);
 cfg_darks.folder_name         = [cfg_darks.result_folder_path  'EXPECTATION/CUE_PRED_unbal_64hz'];     % path to first level results 
 cfg_darks.channelpools        = {'ALL', 'FRONTAL', 'OCCIP'};                                % all comparisons are computed for each channelpool
 cfg_darks.frst_level_analysis = 'cue_prediction';
